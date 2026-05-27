@@ -1,0 +1,2924 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>DAEXA · Glanbia Performance Nutrition</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080c10;
+  --surface: #0f1318;
+  --surface2: #161c24;
+  --border: #1e2730;
+  --border2: #2a3540;
+  --text: #e8edf2;
+  --muted: #5a7080;
+  --muted2: #3a4f60;
+  --red: #ff3d3d;
+  --orange: #ff7a00;
+  --yellow: #ffc800;
+  --green: #00e676;
+  --blue: #2979ff;
+  --cyan: #00e5ff;
+  --red-bg: rgba(255,61,61,0.08);
+  --orange-bg: rgba(255,122,0,0.08);
+  --yellow-bg: rgba(255,200,0,0.08);
+  --green-bg: rgba(0,230,118,0.08);
+  --blue-bg: rgba(41,121,255,0.08);
+  --f-mono: 'IBM Plex Mono', monospace;
+  --f-sans: 'IBM Plex Sans', sans-serif;
+  --r: 6px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--f-sans);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── LAYOUT ── */
+.shell { display: flex; flex-direction: column; height: 100dvh; max-width: 600px; margin: 0 auto; position: relative; }
+.topbar {
+  flex-shrink: 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 50;
+}
+.logo { font-family: var(--f-mono); font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: var(--cyan); }
+.logo-sub { font-size: 9px; color: var(--muted); font-family: var(--f-mono); display: block; margin-top: 1px; letter-spacing: 0.1em; }
+.store-pill {
+  font-family: var(--f-mono); font-size: 10px; color: var(--muted);
+  border: 1px solid var(--border); padding: 3px 10px; border-radius: 20px;
+  max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.store-pill.live { color: var(--cyan); border-color: rgba(0,229,255,0.3); background: rgba(0,229,255,0.05); }
+
+.progress-bar {
+  flex-shrink: 0;
+  height: 2px; background: var(--border);
+  position: relative; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; background: var(--cyan);
+  transition: width 0.3s ease;
+  width: 0%;
+}
+
+.step-tabs {
+  flex-shrink: 0;
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.step-tab {
+  padding: 8px 4px; text-align: center;
+  font-family: var(--f-mono); font-size: 10px; color: var(--muted);
+  cursor: pointer; border-bottom: 2px solid transparent;
+  transition: all 0.15s; line-height: 1.2;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.step-tab .tl { font-size: 12px; font-weight: 600; }
+.step-tab:hover { color: var(--text); background: var(--surface2); }
+.step-tab.active { color: var(--cyan); border-bottom-color: var(--cyan); background: rgba(0,229,255,0.04); }
+.step-tab.done { color: var(--green); }
+.step-tab.done .tl::after { content: '✓'; font-size: 9px; margin-left: 2px; }
+
+.scroll-area { flex: 1; overflow-y: auto; overflow-x: hidden; padding-bottom: 70px; }
+.scroll-area::-webkit-scrollbar { width: 4px; }
+.scroll-area::-webkit-scrollbar-track { background: transparent; }
+.scroll-area::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+/* ── PANELS ── */
+.panel { display: none; padding: 16px; }
+.panel.active { display: block; }
+
+/* ── TYPOGRAPHY ── */
+.sec-label {
+  font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.15em;
+  color: var(--muted); text-transform: uppercase; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ── STORE GRID ── */
+.store-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.sc {
+  border: 1px solid var(--border); border-radius: var(--r);
+  padding: 14px 12px; cursor: pointer; transition: all 0.12s;
+  background: var(--surface);
+  position: relative;
+}
+.sc:hover { border-color: var(--border2); background: var(--surface2); }
+.sc.sel { border-color: var(--cyan); background: rgba(0,229,255,0.06); }
+.sc .ch { font-family: var(--f-mono); font-size: 9px; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 4px; }
+.sc .nm { font-size: 12px; font-weight: 600; color: var(--text); }
+.sc .sb { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.sc.sel .nm { color: var(--cyan); }
+.sc .alert-dot {
+  position: absolute; top: 8px; right: 8px;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--red); box-shadow: 0 0 4px var(--red);
+}
+
+/* ── SEVERITY BADGES ── */
+.sev { display: inline-flex; align-items: center; gap: 4px; font-family: var(--f-mono); font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: 500; }
+.sev-red { background: var(--red-bg); color: var(--red); border: 1px solid rgba(255,61,61,0.25); }
+.sev-orange { background: var(--orange-bg); color: var(--orange); border: 1px solid rgba(255,122,0,0.25); }
+.sev-yellow { background: var(--yellow-bg); color: var(--yellow); border: 1px solid rgba(255,200,0,0.25); }
+.sev-green { background: var(--green-bg); color: var(--green); border: 1px solid rgba(0,230,118,0.25); }
+
+/* ── ALERT BANNERS ── */
+.banner {
+  border-radius: var(--r); padding: 10px 12px; margin-bottom: 12px;
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.banner-red { background: var(--red-bg); border: 1px solid rgba(255,61,61,0.25); border-left: 3px solid var(--red); }
+.banner-orange { background: var(--orange-bg); border: 1px solid rgba(255,122,0,0.2); border-left: 3px solid var(--orange); }
+.banner-green { background: var(--green-bg); border: 1px solid rgba(0,230,118,0.2); border-left: 3px solid var(--green); }
+.banner-yellow { background: var(--yellow-bg); border: 1px solid rgba(255,200,0,0.2); border-left: 3px solid var(--yellow); }
+.banner-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.banner-text { font-size: 11px; line-height: 1.6; }
+.banner-text strong { display: block; font-size: 11px; margin-bottom: 2px; }
+.banner-red .banner-text { color: #ff7a7a; }
+.banner-red .banner-text strong { color: var(--red); }
+.banner-orange .banner-text { color: #ffaa55; }
+.banner-orange .banner-text strong { color: var(--orange); }
+.banner-green .banner-text { color: #55e8a0; }
+.banner-green .banner-text strong { color: var(--green); }
+.banner-yellow .banner-text { color: #ffe066; }
+.banner-yellow .banner-text strong { color: var(--yellow); }
+
+/* ── SELECTOR BUTTONS ── */
+.sel-group { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 4px; }
+.sel-btn {
+  padding: 10px 16px; border-radius: 8px;
+  border: 1px solid var(--border2); background: transparent;
+  color: var(--muted); font-family: var(--f-sans); font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: all 0.12s; white-space: nowrap;
+  min-height: 44px; display: inline-flex; align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
+.sel-btn:hover { border-color: var(--border2); color: var(--text); background: var(--surface2); }
+.sel-btn:active { opacity: 0.75; transform: scale(0.97); }
+.sel-btn.s-green { border-color: var(--green); color: var(--green); background: var(--green-bg); }
+.sel-btn.s-red { border-color: var(--red); color: var(--red); background: var(--red-bg); }
+.sel-btn.s-orange { border-color: var(--orange); color: var(--orange); background: var(--orange-bg); }
+.sel-btn.s-yellow { border-color: var(--yellow); color: var(--yellow); background: var(--yellow-bg); }
+.sel-btn.s-blue { border-color: var(--blue); color: var(--blue); background: var(--blue-bg); }
+.sel-btn.s-cyan { border-color: var(--cyan); color: var(--cyan); background: rgba(0,229,255,0.08); }
+
+/* ── FIELD ── */
+.field { margin-bottom: 16px; }
+.fl {
+  font-size: 12px; font-weight: 600; color: var(--muted);
+  margin-bottom: 8px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+}
+
+/* ── SKU STATUS TABLE ── */
+.sku-grid { width: 100%; border-collapse: collapse; }
+
+
+.sku-grid td:not(:first-child) { text-align: center; }
+.sku-nm { font-size: 12px; font-weight: 500; color: var(--text); }
+.sku-tag { font-family: var(--f-mono); font-size: 9px; padding: 1px 5px; border-radius: 3px; }
+.sku-crit { background: var(--red-bg); color: var(--red); border: 1px solid rgba(255,61,61,0.2); }
+.sku-grow { background: var(--green-bg); color: var(--green); border: 1px solid rgba(0,230,118,0.2); }
+.sku-warn { background: var(--yellow-bg); color: var(--yellow); border: 1px solid rgba(255,200,0,0.2); }
+.sku-cycle {
+  width: 56px; height: 56px; border-radius: 10px;
+  border: 1.5px solid var(--border2); background: var(--surface2);
+  cursor: pointer; font-size: 20px; font-family: var(--f-mono); font-weight: 600;
+  color: var(--muted2); display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  transition: background 0.1s, border-color 0.1s, color 0.1s;
+  user-select: none;
+}
+.sku-cycle[data-state="ok"]  { border-color: var(--green);  background: var(--green-bg);  color: var(--green); }
+.sku-cycle[data-state="low"] { border-color: var(--yellow); background: var(--yellow-bg); color: var(--yellow); }
+.sku-cycle[data-state="oos"] { border-color: var(--red);    background: var(--red-bg);    color: var(--red); }
+.sku-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 6px; border-bottom: 1px solid var(--border);
+  gap: 10px;
+}
+.sku-row:last-child { border-bottom: none; }
+.sku-info { flex: 1; min-width: 0; }
+.sku-state-label {
+  font-family: var(--f-mono); font-size: 9px; color: var(--muted2);
+  margin-top: 3px; letter-spacing: 0.06em;
+}
+
+/* ── NUMBER INPUTS ── */
+.num-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.num-box { display: flex; flex-direction: column; gap: 4px; }
+.num-label { font-size: 10px; color: var(--muted); font-family: var(--f-mono); }
+.num-input {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: var(--r); color: var(--cyan);
+  font-family: var(--f-mono); font-size: 26px; font-weight: 600;
+  padding: 10px 12px; outline: none; width: 100%;
+  transition: border-color 0.12s; text-align: center;
+}
+.num-input:focus { border-color: var(--cyan); }
+.spin-row { display: flex; align-items: center; gap: 8px; }
+.spin-btn {
+  width: 44px; height: 44px; border-radius: 8px;
+  border: 1px solid var(--border2); background: var(--surface2);
+  color: var(--text); font-size: 22px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.spin-btn:active { background: var(--border2); }
+
+/* ── TEXT INPUT ── */
+.txt-input {
+  width: 100%; padding: 9px 12px;
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: var(--r); color: var(--text);
+  font-family: var(--f-sans); font-size: 12px;
+  outline: none; resize: none; transition: border-color 0.12s;
+}
+.txt-input:focus { border-color: var(--cyan); }
+.txt-input::placeholder { color: var(--muted2); }
+
+/* ── VOICE PROMPT ── */
+.vp {
+  background: rgba(0,229,255,0.04); border: 1px solid rgba(0,229,255,0.12);
+  border-left: 3px solid var(--cyan);
+  border-radius: var(--r); padding: 10px 12px; margin-bottom: 14px;
+}
+.vp-label { font-family: var(--f-mono); font-size: 9px; color: var(--cyan); letter-spacing: 0.12em; margin-bottom: 4px; }
+.vp-text { font-size: 11px; color: #8ab4c8; line-height: 1.65; font-style: italic; }
+
+/* ── DIVIDER ── */
+.div { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
+/* ── SCORE DISPLAY ── */
+.score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+.score-box {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: var(--r); padding: 10px 8px; text-align: center;
+}
+.score-box .sv { font-family: var(--f-mono); font-size: 20px; font-weight: 600; line-height: 1; margin-bottom: 3px; }
+.score-box .ss { font-size: 9px; color: var(--muted); letter-spacing: 0.06em; }
+.sv-red { color: var(--red); }
+.sv-orange { color: var(--orange); }
+.sv-yellow { color: var(--yellow); }
+.sv-green { color: var(--green); }
+
+/* ── OUTPUT CARDS ── */
+.out-card {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: var(--r); margin-bottom: 12px; overflow: hidden;
+}
+.out-card-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+}
+.out-card-title { font-family: var(--f-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.1em; }
+.out-card-body {
+  padding: 12px 14px;
+  font-family: var(--f-mono); font-size: 11px; color: var(--text);
+  line-height: 1.7; white-space: pre-wrap; max-height: 220px;
+  overflow-y: auto;
+}
+.out-card-body::-webkit-scrollbar { width: 3px; }
+.out-card-body::-webkit-scrollbar-thumb { background: var(--border2); }
+
+.out-actions { padding: 10px 14px; border-top: 1px solid var(--border); display: flex; gap: 8px; flex-wrap: wrap; }
+.act-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 10px 16px; border-radius: 8px; min-height: 40px;
+  border: 1px solid var(--border2); background: transparent;
+  color: var(--muted); font-family: var(--f-sans); font-size: 12px;
+  cursor: pointer; transition: all 0.12s;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+}
+.act-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+.act-btn.primary { border-color: var(--green); color: var(--green); background: var(--green-bg); }
+.act-btn.primary:hover { opacity: 0.85; }
+.act-btn.copied { border-color: var(--cyan) !important; color: var(--cyan) !important; }
+.comp-tag {
+  padding: 8px 14px; border-radius: 8px; min-height: 40px;
+  border: 1px solid var(--border2); background: transparent;
+  color: var(--muted); font-size: 12px; cursor: pointer; transition: all 0.12s;
+  display: inline-flex; align-items: center;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+}
+
+/* ── WEEKLY DIGEST ── */
+.digest-table { width: 100%; border-collapse: collapse; }
+.digest-table th {
+  font-family: var(--f-mono); font-size: 9px; color: var(--muted);
+  text-align: left; padding: 5px 10px; border-bottom: 1px solid var(--border);
+  letter-spacing: 0.08em;
+}
+.digest-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); font-size: 11px; }
+.digest-table td:first-child { color: var(--muted); }
+.digest-table td:last-child { font-family: var(--f-mono); font-weight: 500; }
+
+/* ── OPPORTUNITY CARDS ── */
+.opp-list { display: flex; flex-direction: column; gap: 8px; }
+.opp-card {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: var(--r); padding: 10px 12px;
+}
+.opp-icon { font-size: 16px; flex-shrink: 0; }
+.opp-text { font-size: 11px; color: var(--text); line-height: 1.5; }
+.opp-text strong { color: var(--green); font-size: 11px; }
+
+/* ── NAV BOTTOM ── */
+.nav-bottom {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: rgba(8,12,16,0.97); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+  padding: 10px 16px; display: flex; gap: 8px;
+  max-width: 600px; margin: 0 auto;
+}
+.btn-main {
+  flex: 1; padding: 14px; border-radius: var(--r);
+  background: var(--cyan); border: none; color: #000;
+  font-family: var(--f-sans); font-size: 14px; font-weight: 700;
+  cursor: pointer; transition: opacity 0.12s; min-height: 52px;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+}
+.btn-main:hover { opacity: 0.88; }
+.btn-back {
+  padding: 14px 18px; border-radius: var(--r);
+  background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--text); font-family: var(--f-sans); font-size: 14px;
+  cursor: pointer; transition: all 0.12s; min-height: 52px;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+}
+.btn-back:hover { border-color: var(--cyan); color: var(--cyan); }
+
+.hidden { display: none; }
+.gnc-only, .heb-only { display: none; }
+
+/* ── COMPETITOR TAGS ── */
+.comp-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.comp-tag:hover { border-color: var(--orange); color: var(--orange); }
+.comp-tag.active { border-color: var(--orange); color: var(--orange); background: var(--orange-bg); }
+
+/* Recurring issue row */
+.rec-table { width: 100%; border-collapse: collapse; }
+.rec-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); font-size: 11px; }
+.rec-table td:first-child { color: var(--text); font-weight: 500; }
+.rec-table td:last-child { text-align: right; font-family: var(--f-mono); }
+
+.badge-count {
+  display: inline-block; background: var(--red); color: #fff;
+  font-family: var(--f-mono); font-size: 10px; font-weight: 600;
+  padding: 1px 6px; border-radius: 10px; min-width: 20px; text-align: center;
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div>
+      <span class="logo">DAEXA</span>
+      <span class="logo-sub">GLANBIA PERFORMANCE NUTRITION · GPN SALES MEXICO</span>
+    </div>
+    <div class="store-pill" id="top-store">No store selected</div>
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
+
+  <!-- STEP TABS -->
+  <div class="step-tabs">
+    <button type="button" class="step-tab active" onclick="goTo(0)" id="tab-0"><span class="tl">①</span><span>Store</span></div>
+    <button type="button" class="step-tab" onclick="goTo(1)" id="tab-1"><span class="tl">D</span><span>Avail.</span></div>
+    <button type="button" class="step-tab" onclick="goTo(2)" id="tab-2"><span class="tl">A</span><span>Shelf</span></div>
+    <button type="button" class="step-tab" onclick="goTo(3)" id="tab-3"><span class="tl">EX</span><span>Display</span></div>
+    <button type="button" class="step-tab" onclick="goTo(4)" id="tab-4"><span class="tl">A</span><span>Promo</span></div>
+    <button type="button" class="step-tab" onclick="goTo(5)" id="tab-5"><span class="tl">↗</span><span>Report</span></button>
+  </div>
+
+  <div class="scroll-area">
+
+    <!-- ══════════════════════════════════════════
+         PANEL 0 — FREE-FORM STORE ENTRY
+    ══════════════════════════════════════════ -->
+    <div class="panel active" id="p0">
+      <div class="sec-label">Store Information</div>
+
+      <div class="field">
+        <div class="fl">City</div>
+        <div class="sel-group" id="city-sel" style="margin-bottom:8px;">
+          <button type="button" class="sel-btn" onclick="selCityBtn(this,'Guadalajara')">Guadalajara</button>
+          <button type="button" class="sel-btn" onclick="selCityBtn(this,'Ciudad de México')">CDMX</button>
+          <button type="button" class="sel-btn" onclick="selCityBtn(this,'Monterrey')">Monterrey</button>
+          <button type="button" class="sel-btn" onclick="selCityBtn(this,'Querétaro')">Querétaro</button>
+          <button type="button" class="sel-btn" onclick="selCityBtn(this,'Other')">Other</button>
+        </div>
+        <input class="txt-input" id="city-input" placeholder="Type city name..." style="height:44px;display:none;" oninput="updateStorePill()">
+      </div>
+
+      <div class="field">
+        <div class="fl">Chain / Channel</div>
+        <div class="sel-group" id="chain-sel" style="margin-bottom:8px;">
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'GNC')">GNC</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'HEB')">HEB</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'Walmart')">Walmart</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'Sam's Club')">Sam's</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'Costco')">Costco</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'Chedraui')">Chedraui</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'Farmacias del Ahorro')">Fcia. Ahorro</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'Farmacia San Pablo')">Fcia. San Pablo</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'Suplementos MX')">Suplementos MX</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'Other')">Other</button>
+        </div>
+        <input class="txt-input" id="chain-input" placeholder="Chain or channel name..." style="height:44px;display:none;" oninput="updateStorePill()">
+      </div>
+
+      <div class="field">
+        <div class="fl">Store Name / Location</div>
+        <input class="txt-input" id="store-name-input" placeholder="e.g. GNC Andares, Chedraui Acueducto..." style="height:44px;" oninput="updateStorePill(); document.getElementById('btn-next').textContent = 'D — Availability →';">
+      </div>
+
+      <div class="field">
+        <div class="fl">Distributor</div>
+        <div class="sel-group" id="dist-sel">
+          <button type="button" class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Maxiva</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Zembor</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Gimpack</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Raymex</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Directo</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Unknown</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="fl">Date & Time</div>
+        <input class="txt-input" id="visit-dt" type="datetime-local" style="height:44px;">
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         PANEL 1 — D: DISPONIBILIDAD
+    ══════════════════════════════════════════ -->
+    <div class="panel" id="p1">
+      <div class="sec-label">D — Disponibilidad</div>
+
+      <div class="field">
+        <div class="fl">SKU Status <span style="font-size:10px;color:var(--muted);font-weight:400;">— tap status button to cycle · tap row to expand price & facings</span></div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;" id="sku-list">
+          <div class="sku-row" id="row-0" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-0'),'lbl-0')">
+              <div class="sku-info">
+                <div class="sku-nm">ON GS Whey 1.5lb</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">ON Gold Standard</span>
+                  <span class="sku-state-label" id="lbl-0">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-0" onclick="event.stopPropagation();cycleSku(this,'lbl-0')">—</button>
+            </div>
+            <div class="sku-detail" id="det-0" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-0" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-0" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-0',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-0" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-0',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-0',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-0" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-0',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-0">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-0','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-0','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-0','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-0','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-0" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-0"></div></div>
+                <span class="share-pct" id="spct-0">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-1" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-1'),'lbl-1')">
+              <div class="sku-info">
+                <div class="sku-nm">ON GS Whey 2lb</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">ON Gold Standard</span>
+                  <span class="sku-state-label" id="lbl-1">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-1" onclick="event.stopPropagation();cycleSku(this,'lbl-1')">—</button>
+            </div>
+            <div class="sku-detail" id="det-1" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-1" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-1" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-1',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-1" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-1',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-1',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-1" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-1',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-1">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-1','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-1','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-1','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-1','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-1" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-1"></div></div>
+                <span class="share-pct" id="spct-1">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-2" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-2'),'lbl-2')">
+              <div class="sku-info">
+                <div class="sku-nm">ON GS Whey 5lb</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-grow" style="font-size:9px;">ON Gold Standard</span>
+                  <span class="sku-state-label" id="lbl-2">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-2" onclick="event.stopPropagation();cycleSku(this,'lbl-2')">—</button>
+            </div>
+            <div class="sku-detail" id="det-2" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-2" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-2" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-2',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-2" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-2',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-2',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-2" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-2',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-2">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-2','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-2','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-2','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-2','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-2" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-2"></div></div>
+                <span class="share-pct" id="spct-2">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-3" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-3'),'lbl-3')">
+              <div class="sku-info">
+                <div class="sku-nm">ON GS Whey 10lb</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">ON Gold Standard</span>
+                  <span class="sku-state-label" id="lbl-3">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-3" onclick="event.stopPropagation();cycleSku(this,'lbl-3')">—</button>
+            </div>
+            <div class="sku-detail" id="det-3" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-3" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-3" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-3',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-3" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-3',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-3',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-3" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-3',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-3">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-3','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-3','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-3','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-3','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-3" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-3"></div></div>
+                <span class="share-pct" id="spct-3">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-4" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-4'),'lbl-4')">
+              <div class="sku-info">
+                <div class="sku-nm">ON GS Whey Sachet</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">ON Gold Standard</span>
+                  <span class="sku-state-label" id="lbl-4">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-4" onclick="event.stopPropagation();cycleSku(this,'lbl-4')">—</button>
+            </div>
+            <div class="sku-detail" id="det-4" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-4" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-4" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-4',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-4" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-4',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-4',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-4" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-4',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-4">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-4','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-4','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-4','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-4','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-4" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-4"></div></div>
+                <span class="share-pct" id="spct-4">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-5" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-5'),'lbl-5')">
+              <div class="sku-info">
+                <div class="sku-nm">ON GS RTD</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">ON Gold Standard</span>
+                  <span class="sku-state-label" id="lbl-5">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-5" onclick="event.stopPropagation();cycleSku(this,'lbl-5')">—</button>
+            </div>
+            <div class="sku-detail" id="det-5" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-5" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-5" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-5',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-5" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-5',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-5',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-5" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-5',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-5">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-5','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-5','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-5','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-5','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-5" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-5"></div></div>
+                <span class="share-pct" id="spct-5">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-6" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-6'),'lbl-6')">
+              <div class="sku-info">
+                <div class="sku-nm">Isopure Zero/Low Carb 1lb</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">Isopure Zero/Low Carb</span>
+                  <span class="sku-state-label" id="lbl-6">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-6" onclick="event.stopPropagation();cycleSku(this,'lbl-6')">—</button>
+            </div>
+            <div class="sku-detail" id="det-6" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-6" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-6" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-6',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-6" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-6',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-6',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-6" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-6',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-6">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-6','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-6','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-6','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-6','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-6" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-6"></div></div>
+                <span class="share-pct" id="spct-6">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-7" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-7'),'lbl-7')">
+              <div class="sku-info">
+                <div class="sku-nm">Isopure Zero/Low Carb 3lb</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-grow" style="font-size:9px;">Isopure Zero/Low Carb</span>
+                  <span class="sku-state-label" id="lbl-7">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-7" onclick="event.stopPropagation();cycleSku(this,'lbl-7')">—</button>
+            </div>
+            <div class="sku-detail" id="det-7" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-7" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-7" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-7',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-7" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-7',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-7',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-7" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-7',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-7">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-7','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-7','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-7','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-7','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-7" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-7"></div></div>
+                <span class="share-pct" id="spct-7">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-8" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-8'),'lbl-8')">
+              <div class="sku-info">
+                <div class="sku-nm">Isopure Zero/Low Carb 4.5lb</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">Isopure Zero/Low Carb</span>
+                  <span class="sku-state-label" id="lbl-8">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-8" onclick="event.stopPropagation();cycleSku(this,'lbl-8')">—</button>
+            </div>
+            <div class="sku-detail" id="det-8" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-8" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-8" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-8',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-8" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-8',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-8',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-8" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-8',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-8">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-8','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-8','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-8','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-8','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-8" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-8"></div></div>
+                <span class="share-pct" id="spct-8">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-9" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-9'),'lbl-9')">
+              <div class="sku-info">
+                <div class="sku-nm">Isopure Zero/Low Carb 7.5lb</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">Isopure Zero/Low Carb</span>
+                  <span class="sku-state-label" id="lbl-9">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-9" onclick="event.stopPropagation();cycleSku(this,'lbl-9')">—</button>
+            </div>
+            <div class="sku-detail" id="det-9" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-9" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-9" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-9',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-9" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-9',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-9',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-9" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-9',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-9">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-9','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-9','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-9','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-9','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-9" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-9"></div></div>
+                <span class="share-pct" id="spct-9">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-10" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-10'),'lbl-10')">
+              <div class="sku-info">
+                <div class="sku-nm">Isopure Zero/Low Carb RTD</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">Isopure Zero/Low Carb</span>
+                  <span class="sku-state-label" id="lbl-10">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-10" onclick="event.stopPropagation();cycleSku(this,'lbl-10')">—</button>
+            </div>
+            <div class="sku-detail" id="det-10" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-10" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-10" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-10',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-10" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-10',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-10',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-10" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-10',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-10">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-10','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-10','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-10','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-10','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-10" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-10"></div></div>
+                <span class="share-pct" id="spct-10">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-11" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-11'),'lbl-11')">
+              <div class="sku-info">
+                <div class="sku-nm">Isopure Clear 1lb</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">Isopure Clear Protein</span>
+                  <span class="sku-state-label" id="lbl-11">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-11" onclick="event.stopPropagation();cycleSku(this,'lbl-11')">—</button>
+            </div>
+            <div class="sku-detail" id="det-11" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-11" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-11" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-11',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-11" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-11',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-11',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-11" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-11',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-11">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-11','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-11','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-11','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-11','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-11" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-11"></div></div>
+                <span class="share-pct" id="spct-11">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-12" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-12'),'lbl-12')">
+              <div class="sku-info">
+                <div class="sku-nm">Isopure Clear 2lb</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">Isopure Clear Protein</span>
+                  <span class="sku-state-label" id="lbl-12">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-12" onclick="event.stopPropagation();cycleSku(this,'lbl-12')">—</button>
+            </div>
+            <div class="sku-detail" id="det-12" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-12" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-12" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-12',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-12" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-12',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-12',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-12" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-12',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-12">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-12','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-12','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-12','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-12','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-12" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-12"></div></div>
+                <span class="share-pct" id="spct-12">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-13" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-13'),'lbl-13')">
+              <div class="sku-info">
+                <div class="sku-nm">Isopure Clear RTD</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">Isopure Clear Protein</span>
+                  <span class="sku-state-label" id="lbl-13">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-13" onclick="event.stopPropagation();cycleSku(this,'lbl-13')">—</button>
+            </div>
+            <div class="sku-detail" id="det-13" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-13" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-13" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-13',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-13" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-13',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-13',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-13" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-13',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-13">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-13','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-13','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-13','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-13','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-13" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-13"></div></div>
+                <span class="share-pct" id="spct-13">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-14" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-14'),'lbl-14')">
+              <div class="sku-info">
+                <div class="sku-nm">Amino Energy 270g</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">Amino Energy</span>
+                  <span class="sku-state-label" id="lbl-14">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-14" onclick="event.stopPropagation();cycleSku(this,'lbl-14')">—</button>
+            </div>
+            <div class="sku-detail" id="det-14" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-14" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-14" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-14',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-14" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-14',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-14',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-14" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-14',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-14">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-14','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-14','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-14','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-14','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-14" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-14"></div></div>
+                <span class="share-pct" id="spct-14">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-15" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-15'),'lbl-15')">
+              <div class="sku-info">
+                <div class="sku-nm">Amino Energy 285g</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">Amino Energy</span>
+                  <span class="sku-state-label" id="lbl-15">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-15" onclick="event.stopPropagation();cycleSku(this,'lbl-15')">—</button>
+            </div>
+            <div class="sku-detail" id="det-15" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-15" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-15" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-15',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-15" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-15',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-15',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-15" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-15',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-15">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-15','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-15','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-15','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-15','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-15" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-15"></div></div>
+                <span class="share-pct" id="spct-15">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-16" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-16'),'lbl-16')">
+              <div class="sku-info">
+                <div class="sku-nm">Amino Energy 585g</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-grow" style="font-size:9px;">Amino Energy</span>
+                  <span class="sku-state-label" id="lbl-16">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-16" onclick="event.stopPropagation();cycleSku(this,'lbl-16')">—</button>
+            </div>
+            <div class="sku-detail" id="det-16" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-16" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-16" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-16',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-16" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-16',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-16',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-16" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-16',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-16">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-16','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-16','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-16','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-16','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-16" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-16"></div></div>
+                <span class="share-pct" id="spct-16">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-17" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-17'),'lbl-17')">
+              <div class="sku-info">
+                <div class="sku-nm">Amino Energy RTD</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">Amino Energy</span>
+                  <span class="sku-state-label" id="lbl-17">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-17" onclick="event.stopPropagation();cycleSku(this,'lbl-17')">—</button>
+            </div>
+            <div class="sku-detail" id="det-17" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-17" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-17" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-17',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-17" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-17',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-17',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-17" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-17',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-17">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-17','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-17','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-17','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-17','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-17" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-17"></div></div>
+                <span class="share-pct" id="spct-17">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-18" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-18'),'lbl-18')">
+              <div class="sku-info">
+                <div class="sku-nm">ON Creatine 300g</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">ON Creatine</span>
+                  <span class="sku-state-label" id="lbl-18">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-18" onclick="event.stopPropagation();cycleSku(this,'lbl-18')">—</button>
+            </div>
+            <div class="sku-detail" id="det-18" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-18" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-18" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-18',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-18" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-18',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-18',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-18" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-18',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-18">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-18','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-18','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-18','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-18','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-18" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-18"></div></div>
+                <span class="share-pct" id="spct-18">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-19" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-19'),'lbl-19')">
+              <div class="sku-info">
+                <div class="sku-nm">ON Creatine 600g</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-grow" style="font-size:9px;">ON Creatine</span>
+                  <span class="sku-state-label" id="lbl-19">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-19" onclick="event.stopPropagation();cycleSku(this,'lbl-19')">—</button>
+            </div>
+            <div class="sku-detail" id="det-19" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-19" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-19" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-19',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-19" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-19',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-19',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-19" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-19',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-19">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-19','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-19','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-19','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-19','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-19" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-19"></div></div>
+                <span class="share-pct" id="spct-19">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-20" style="">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-20'),'lbl-20')">
+              <div class="sku-info">
+                <div class="sku-nm">ON Creatine 1200g</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-tag" style="font-size:9px;">ON Creatine</span>
+                  <span class="sku-state-label" id="lbl-20">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-20" onclick="event.stopPropagation();cycleSku(this,'lbl-20')">—</button>
+            </div>
+            <div class="sku-detail" id="det-20" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-20" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-20" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-20',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-20" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-20',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-20',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-20" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-20',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-20">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-20','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-20','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-20','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-20','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-20" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-20"></div></div>
+                <span class="share-pct" id="spct-20">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" id="row-21" style="border-bottom:none;">
+            <div class="sku-main" onclick="cycleSku(document.getElementById('cyc-21'),'lbl-21')">
+              <div class="sku-info">
+                <div class="sku-nm">Isopure Creatine 500g</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span class="sku-tag sku-grow" style="font-size:9px;">Isopure Creatine</span>
+                  <span class="sku-state-label" id="lbl-21">— not recorded</span>
+                </div>
+              </div>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-21" onclick="event.stopPropagation();cycleSku(this,'lbl-21')">—</button>
+            </div>
+            <div class="sku-detail" id="det-21" style="display:none;">
+              <div class="sku-detail-grid">
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="price-21" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Price</div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <span class="sd-currency">$</span>
+                    <input class="sd-input" type="number" id="cprice-21" placeholder="0" min="0" step="1">
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">GPN Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('facings-21',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-21" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('facings-21',1)">+</button>
+                  </div>
+                </div>
+                <div class="sku-detail-col">
+                  <div class="sdl">Comp. Facings</div>
+                  <div class="mini-spin">
+                    <button type="button" onclick="miniSpin('cfacings-21',-1)">−</button>
+                    <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-21" value="0" min="0" step="1" style="text-align:center;">
+                    <button type="button" onclick="miniSpin('cfacings-21',1)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div class="sdl">Shelf Position</div>
+                <div class="sd-pos-group" id="pos-21">
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-21','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-21','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-21','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-21','Floor')">Floor</button>
+                </div>
+              </div>
+              <div class="sku-share-bar" id="share-21" style="display:none;">
+                <span class="share-label">Share vs comp:</span>
+                <div class="share-track"><div class="share-fill" id="sfill-21"></div></div>
+                <span class="share-pct" id="spct-21">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="sku-row" style="border-bottom:none;">
+            <div class="sku-main" style="cursor:default;">
+              <div class="sku-info">
+                <div class="sku-nm" style="color:var(--muted);">+ Other SKU</div>
+                <div class="sku-state-label">use field below</div>
+              </div>
+              <div style="width:56px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="fl">Other SKU / availability note</div>
+        <input class="txt-input" id="sku-extra" placeholder="e.g. GS PWO 300g — out of stock" style="height:44px;">
+      </div>
+
+      <div class="field">
+        <div class="fl">OOS Root Cause (if any)</div>
+        <div class="sel-group" id="oos-cause">
+          <button type="button" class="sel-btn" onclick="selBtn(this,'oos-cause','green')">No OOS</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'oos-cause','red')">Delivery failure</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'oos-cause','red')">Not restocked</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'oos-cause','orange')">Phantom stock</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'oos-cause','yellow')">Unconfirmed</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         PANEL 2 — A: ANAQUEL
+    ══════════════════════════════════════════ -->
+    <div class="panel" id="p2">
+      <div class="sec-label">A — Shelf</div>
+
+      <div class="field">
+        <div class="fl">Shelf Position (overall brand)</div>
+        <div class="sel-group" id="shelf-pos">
+          <button type="button" class="sel-btn" onclick="selBtn(this,'shelf-pos','green')">Eye level ✓</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'shelf-pos','yellow')">Mid shelf</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'shelf-pos','orange')">Low shelf</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'shelf-pos','red')">Floor / dead zone</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="fl">Brand Visibility</div>
+        <div class="sel-group" id="visibility">
+          <button type="button" class="sel-btn" onclick="selBtn(this,'visibility','green')">Dominant</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'visibility','cyan')">Competitive</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'visibility','orange')">Weak</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'visibility','red')">Invisible</button>
+        </div>
+      </div>
+
+      <div class="num-row field">
+        <div class="num-box">
+          <div class="num-label">GPN TOTAL FACINGS</div>
+          <div class="spin-row">
+            <button type="button" class="spin-btn" onclick="spin('facing-gpn',-1)">−</button>
+            <input class="num-input" type="number" id="facing-gpn" value="0" min="0" style="flex:1">
+            <button type="button" class="spin-btn" onclick="spin('facing-gpn',1)">+</button>
+          </div>
+        </div>
+        <div class="num-box">
+          <div class="num-label">COMPETITOR FACINGS</div>
+          <div class="spin-row">
+            <button type="button" class="spin-btn" onclick="spin('facing-comp',-1)">−</button>
+            <input class="num-input" type="number" id="facing-comp" value="0" min="0" style="flex:1">
+            <button type="button" class="spin-btn" onclick="spin('facing-comp',1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <hr class="div">
+
+      <div class="field">
+        <div class="fl">GPN Creatine presence in category section</div>
+        <div class="sel-group" id="creatine-on">
+          <button type="button" class="sel-btn" onclick="selBtn(this,'creatine-on','green')">Present ✓</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'creatine-on','red')">Missing</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'creatine-on','yellow')">1–2 facings only</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="fl">Planogram compliance</div>
+        <div class="sel-group" id="plano">
+          <button type="button" class="sel-btn" onclick="selBtn(this,'plano','green')">Compliant</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'plano','orange')">Partial deviation</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'plano','red')">Not followed</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'plano','yellow')">No planogram</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="fl">Competitor with strongest shelf pressure</div>
+        <div class="comp-tags" id="comp-pressure">
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Birdman</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Habits</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Yaoca</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">ProWinner</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Elemental</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Air Drive</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">HEB Private Label</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Refreshers</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Dymatize</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">BSN</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Otro Vegan</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Ninguno</button>
+        </div>
+      </div>
+      <div class="field">
+        <div class="fl">Category pressure signals</div>
+        <div class="comp-tags" id="comp-cat">
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Vegan dominates</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Creatine gap</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Sachet pressure</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">RTD rival visible</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Aggressive pricing</button>
+        </div>
+      </div>
+
+
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         PANEL 3 — EX: EXHIBICIONES
+    ══════════════════════════════════════════ -->
+    <div class="panel" id="p3">
+      <div class="sec-label">EX — Display & Activation</div>
+
+      <div class="banner banner-yellow">
+        <span class="banner-icon">!</span>
+        <div class="banner-text">
+          <strong>First 10 days of month — 100% of paid displays must be active.</strong>
+          Absence = contract breach. Document with photo.
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="fl">GPN Secondary Display</div>
+        <div class="sel-group" id="disp-status">
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-status','green')">Active ✓</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-status','red')">Missing</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-status','yellow')">Partial</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="fl">Display Size</div>
+        <div class="sel-group" id="disp-size">
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-size','cyan')">Grande</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-size','cyan')">Mediana</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-size','cyan')">Pequeña</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-size','red')">Sin exhibición</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="fl">Location / Traffic</div>
+        <div class="sel-group" id="disp-loc">
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-loc','green')">Entrance / high traffic</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-loc','yellow')">Internal aisle</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-loc','red')">Dead zone</button>
+        </div>
+      </div>
+
+      <!-- HEB RTD -->
+      <div class="heb-only">
+        <hr class="div">
+        <div class="field">
+          <div class="fl">RTD refrigeration location</div>
+          <div class="sel-group" id="rtd-loc">
+            <button type="button" class="sel-btn" onclick="selBtn(this,'rtd-loc','green')">Cooler + checkout ✓</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'rtd-loc','yellow')">Generic cooler</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'rtd-loc','red')">Ambient shelf</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'rtd-loc','red')">Sin RTD</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="fl">Competitor display vs GPN</div>
+        <div class="sel-group" id="comp-disp">
+          <button type="button" class="sel-btn" onclick="selBtn(this,'comp-disp','green')">GPN dominates</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'comp-disp','yellow')">Similar</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'comp-disp','red')">Competitor dominates</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'comp-disp','cyan')">No competitor visible</button>
+        </div>
+      </div>
+
+
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         PANEL 4 — A: ACTIVACIÓN
+    ══════════════════════════════════════════ -->
+    <div class="panel" id="p4">
+      <div class="sec-label">A — Promo & Activation</div>
+
+      <div class="field">
+        <div class="fl">Price integrity</div>
+        <div class="sel-group" id="price-int">
+          <button type="button" class="sel-btn" onclick="selBtn(this,'price-int','green')">Correct ✓</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'price-int','red')">Incorrect</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'price-int','orange')">Inconsistent</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'price-int','yellow')">No price tag</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="fl">POP Materials (stoppers / danglers)</div>
+        <div class="sel-group" id="pop-ok">
+          <button type="button" class="sel-btn" onclick="selBtn(this,'pop-ok','green')">Present ✓</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'pop-ok','yellow')">Damaged / wrong</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'pop-ok','red')">Missing</button>
+        </div>
+      </div>
+
+      <!-- HEB specific -->
+      <div class="heb-only">
+        <div class="field">
+          <div class="fl">RTD promo — clear to shopper?</div>
+          <div class="sel-group" id="rtd-promo">
+            <button type="button" class="sel-btn" onclick="selBtn(this,'rtd-promo','green')">Clear and visible ✓</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'rtd-promo','red')">Not visible</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'rtd-promo','red')">No active promo</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GNC specific -->
+      <div class="gnc-only">
+        <div class="field">
+          <div class="fl">Staff actively recommends GPN</div>
+          <div class="sel-group" id="staff-rec">
+            <button type="button" class="sel-btn" onclick="selBtn(this,'staff-rec','green')">Spontaneous ✓</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'staff-rec','yellow')">Only if asked</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'staff-rec','red')">Does not recommend</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'staff-rec','red')">Recommends competitor</button>
+          </div>
+        </div>
+        <div class="field">
+          <div class="fl">Staff knowledge level</div>
+          <div class="sel-group" id="staff-level">
+            <button type="button" class="sel-btn" onclick="selBtn(this,'staff-level','green')">High</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'staff-level','yellow')">Medium</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'staff-level','red')">Low</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="fl">Quick win opportunity (optional)</div>
+        <textarea class="txt-input" id="quick-opp" rows="2" placeholder="e.g. Empty shelf space — opportunity to expand ON Creatine..."></textarea>
+      </div>
+
+      <div class="field">
+        <div class="fl">Visit note</div>
+        <textarea class="txt-input" id="visit-note" rows="3" placeholder="Key observation in 1-2 lines..."></textarea>
+      </div>
+
+
+
+      <hr class="div">
+      <button type="button" class="btn-main" onclick="generate()" style="width:100%;">Generate DAEXA Report →</button>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         PANEL 5 — OUTPUT
+    ══════════════════════════════════════════ -->
+    <div class="panel" id="p5">
+      <div class="sec-label">DAEXA Report</div>
+
+      <!-- SCORE ROW -->
+      <div class="score-grid" id="score-grid"></div>
+
+      <!-- SEVERITY FLAG -->
+      <div style="margin-bottom:16px;" id="sev-flag"></div>
+
+      <!-- OPPORTUNITIES -->
+      <div class="field" id="opp-section" style="display:none;">
+        <div class="sec-label">Commercial Opportunities</div>
+        <div class="opp-list" id="opp-list"></div>
+      </div>
+
+      <!-- WHATSAPP -->
+      <div class="out-card">
+        <div class="out-card-head">
+          <div class="out-card-title">WHATSAPP — Distributor</div>
+          <span class="sev-green sev">📲 Listo</span>
+        </div>
+        <div class="out-card-body" id="out-wa"></div>
+        <div class="out-actions">
+          <button type="button" class="act-btn primary" id="cp-wa" onclick="cpBtn('out-wa','cp-wa')">📋 Copiar WhatsApp</button>
+        </div>
+      </div>
+
+      <!-- TEAMS / EMAIL -->
+      <div class="out-card">
+        <div class="out-card-head">
+          <div class="out-card-title">EMAIL / TEAMS — Executive</div>
+          <span class="sev" style="background:var(--blue-bg);color:var(--blue);border:1px solid rgba(41,121,255,0.25);">📧 Ready</span>
+        </div>
+        <div class="out-card-body" id="out-email"></div>
+        <div class="out-actions">
+          <button type="button" class="act-btn" id="cp-email" onclick="cpBtn('out-email','cp-email')">Copiar Email</button>
+          
+        </div>
+      </div>
+
+      <!-- TEAMS -->
+      <div class="out-card">
+        <div class="out-card-head">
+          <div class="out-card-title">MICROSOFT TEAMS</div>
+          <span class="sev" style="background:var(--blue-bg);color:var(--blue);border:1px solid rgba(41,121,255,0.25);">💬 Teams</span>
+        </div>
+        <div class="out-card-body" id="out-teams"></div>
+        <div class="out-actions">
+          <button type="button" class="act-btn" id="cp-teams" onclick="cpBtn('out-teams','cp-teams')">Copiar Teams</button>
+        </div>
+      </div>
+
+      <!-- TXT PLAIN -->
+      <div class="out-card">
+        <div class="out-card-head">
+          <div class="out-card-title">TXT — Plain text export</div>
+          <span class="sev-yellow sev">📄 Export</span>
+        </div>
+        <div class="out-card-body" id="out-txt"></div>
+        <div class="out-actions">
+          <button type="button" class="act-btn primary" onclick="dlTxt()">⬇ Descargar TXT</button>
+          <button type="button" class="act-btn" id="cp-txt" onclick="cpBtn('out-txt','cp-txt')">Copiar texto</button>
+        </div>
+      </div>
+
+      <!-- CSV -->
+      <div class="out-card" style="border-color:rgba(0,230,118,0.25);">
+        <div class="out-card-head" style="background:rgba(0,230,118,0.04);">
+          <div class="out-card-title" style="color:var(--green);">CSV — Excel / Google Sheets</div>
+          <span class="sev-green sev">⬇ Export</span>
+        </div>
+        <div class="out-card-body" id="out-csv" style="font-size:10px; color:var(--muted);"></div>
+        <div style="padding:8px 14px 0; display:flex; align-items:center; gap:8px;">
+          <span style="font-size:10px;font-family:var(--f-mono);" id="sheets-indicator">● Connected to GPN Mexico Field Intelligence</span>
+        </div>
+        <div class="out-actions">
+          <button type="button" class="act-btn primary" onclick="dlSessionCsv()" id="btn-session-csv">⬇ Export Full Session</button>
+          <button type="button" class="act-btn primary" onclick="pushSkuNow()" style="border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,0.08);">↑ Push SKU Data to Sheets</button>
+          <button type="button" class="act-btn" onclick="dlSkuCsv()">⬇ SKU CSV</button>
+        </div>
+      </div>
+
+      <!-- RECURRING ISSUES TRACKER -->
+      <div class="out-card" id="rec-issues-card" style="display:none;">
+        <div class="out-card-head">
+          <div class="out-card-title">RECURRING ISSUES — Session</div>
+        </div>
+        <div style="padding:10px 14px;">
+          <table class="rec-table" id="rec-table"></table>
+        </div>
+      </div>
+
+      <!-- WEEKLY DIGEST -->
+      <div class="out-card" id="weekly-card">
+        <div class="out-card-head">
+          <div class="out-card-title">WEEKLY DIGEST — Session summary</div>
+          <span id="visit-count-badge" class="badge-count">1</span>
+        </div>
+        <div style="padding:10px 14px;">
+          <table class="digest-table" id="digest-table">
+            <thead><tr><th>KPI</th><th>Valor</th></tr></thead>
+            <tbody id="digest-body"></tbody>
+          </table>
+        </div>
+        <div class="out-actions">
+          <button type="button" class="act-btn primary" onclick="dlWeeklyTxt()">⬇ Download Digest</button>
+          <button type="button" class="act-btn" onclick="cpText('digest-out-hidden')">Copy Digest</button>
+        </div>
+      </div>
+
+      <textarea id="digest-out-hidden" style="position:absolute;left:-9999px;top:-9999px;"></textarea>
+      <button type="button" class="btn-back" onclick="newVisit()" style="width:100%; margin-top:8px;">+ New Visit</button>
+    </div>
+
+  </div><!-- scroll-area -->
+
+  <!-- BOTTOM NAV -->
+  <div class="nav-bottom">
+    <button type="button" class="btn-back" id="btn-back" style="display:none;" onclick="prevStep()">← Atrás</button>
+    <button type="button" class="btn-main" id="btn-next" onclick="nextStep()">Seleccionar tienda →</button>
+  </div>
+
+</div><!-- shell -->
+
+<script>
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwRp4hA_oxoMiOSfL3A9zKK1QSuPCoilYJcVTlhuaaE0x48HqcwPcQJlrHc7Ln6mhlXBQ/exec';
+let curStep = 0;
+let selStoreName = '';
+let selChannel = '';
+let sessionVisits = [];
+let recurringIssues = {};
+let csvRows = [];
+
+const CSV_HEADERS = [
+  'Fecha','Hora','Tienda','Ciudad','Cadena','Ubicacion','Canal','Distribuidor','Score_DAEXA','Severidad',
+  'D_OOS_SKUs','D_StockBajo_SKUs','D_OOS_Count','D_Causa_OOS',
+  'A_Posicion','A_Visibilidad','A_Facings_GPN','A_Facings_Comp',
+  'A_Competidor_Presion','A_Presion_Categoria','A_Planograma',
+  'A_Top3_50pct_GNC','A_IsoD3lb_Domina_HEB','A_ON_Creatinas_HEB',
+  'EX_Display','EX_Tamano','EX_Ubicacion','EX_RTD_HEB','EX_CompDisplay',
+  'AP_Precio','AP_POP','AP_RTD_Promo_HEB','AP_Staff_GNC','AP_StaffNivel_GNC',
+  'Issues_Count','Issues_Lista','Accion_Recomendada','Oportunidad','Nota_Final'
+];
+
+const NEXT_LABELS = ['Select store →','D — Availability →','A — Shelf →','EX — Display →','A — Promo →',''];
+
+// ═══════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════
+function goTo(n) {
+  document.querySelectorAll('.panel').forEach((p,i) => p.classList.toggle('active', i===n));
+  document.querySelectorAll('.step-tab').forEach((t,i) => {
+    t.classList.remove('active');
+    if(i===n) t.classList.add('active');
+  });
+  curStep = n;
+  document.getElementById('btn-back').style.display = (n>0 && n<5) ? '' : 'none';
+  document.getElementById('btn-next').style.display = n===5 ? 'none' : '';
+  document.getElementById('btn-next').textContent = NEXT_LABELS[n] || '';
+  document.getElementById('prog').style.width = (n/5*100)+'%';
+  window.scrollTo(0,0);
+}
+
+function nextStep() {
+  if(curStep===0 && !validateP0()){ alert('Please enter at least the chain or store name.'); return; }
+  if(curStep===0) updateStorePill();
+  if(curStep<4) goTo(curStep+1);
+}
+function prevStep() { if(curStep>0) goTo(curStep-1); }
+
+// ═══════════════════════════════════════════
+// SPIN BUTTONS
+// ═══════════════════════════════════════════
+function spin(id, delta) {
+  const el = document.getElementById(id);
+  const v = parseInt(el.value)||0;
+  el.value = Math.max(0, v+delta);
+}
+
+// ═══════════════════════════════════════════
+// COPY WITH FEEDBACK
+// ═══════════════════════════════════════════
+function cpBtn(textId, btnId) {
+  const el = document.getElementById(textId);
+  const text = el.tagName==='TEXTAREA' ? el.value : el.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById(btnId);
+    if(!btn) return;
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('copied');
+    setTimeout(()=>{ btn.textContent=orig; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ═══════════════════════════════════════════
+// FREE-FORM STORE ENTRY
+// ═══════════════════════════════════════════
+function selCityBtn(btn, city) {
+  document.querySelectorAll('#city-sel .sel-btn').forEach(b =>
+    b.classList.remove('s-green','s-red','s-orange','s-yellow','s-blue','s-cyan'));
+  btn.classList.add('s-cyan');
+  const inp = document.getElementById('city-input');
+  if(city === 'Other') {
+    inp.style.display = ''; inp.value = ''; inp.focus();
+  } else {
+    inp.style.display = 'none'; inp.value = city;
+  }
+  updateStorePill();
+}
+
+function selChainBtn(btn, chain) {
+  document.querySelectorAll('#chain-sel .sel-btn').forEach(b =>
+    b.classList.remove('s-green','s-red','s-orange','s-yellow','s-blue','s-cyan'));
+  btn.classList.add('s-cyan');
+  const inp = document.getElementById('chain-input');
+  if(chain === 'Other') {
+    inp.style.display = ''; inp.value = ''; inp.focus();
+  } else {
+    inp.style.display = 'none'; inp.value = chain;
+  }
+  updateStorePill();
+}
+
+function updateStorePill() {
+  const city  = document.getElementById('city-input').value ||
+    (() => { const b = document.querySelector('#city-sel .s-cyan'); return b ? b.textContent.trim() : ''; })();
+  const chain = document.getElementById('chain-input').value ||
+    (() => { const b = document.querySelector('#chain-sel .s-cyan'); return b ? b.textContent.trim() : ''; })();
+  const loc   = document.getElementById('store-name-input').value;
+  const parts = [chain, loc, city].filter(Boolean);
+  selStoreName = parts.join(' · ') || '';
+  selChannel = chain.toLowerCase().replace(/\s+/g,'-');
+  const pill = document.getElementById('top-store');
+  pill.textContent = selStoreName;
+  pill.className = parts.length ? 'store-pill live' : 'store-pill';
+}
+
+function validateP0() {
+  const chain = document.getElementById('chain-input').value ||
+    (() => { const b = document.querySelector('#chain-sel .s-cyan'); return b ? b.textContent.trim() : ''; })();
+  const loc = document.getElementById('store-name-input').value.trim();
+  return chain.length > 0 || loc.length > 0;
+}
+
+// ═══════════════════════════════════════════
+// SELECTORS
+// ═══════════════════════════════════════════
+function selBtn(btn, groupId, color) {
+  const g = document.getElementById(groupId);
+  if(!g) return;
+  g.querySelectorAll('.sel-btn').forEach(b =>
+    b.classList.remove('s-green','s-red','s-orange','s-yellow','s-blue','s-cyan'));
+  btn.classList.add('s-'+color);
+}
+
+function toggleComp(btn) {
+  btn.classList.toggle('active');
+}
+
+const SKU_STATES = [
+  {state:'',    icon:'—', label:'— not recorded'},
+  {state:'ok',  icon:'✓', label:'✓ In stock'},
+  {state:'low', icon:'~', label:'~ Low stock'},
+  {state:'oos', icon:'✕', label:'✕ OOS'}
+];
+function cycleSku(btn, lblId) {
+  const cur = SKU_STATES.findIndex(s => s.state === (btn.dataset.state||''));
+  const next = SKU_STATES[(cur + 1) % SKU_STATES.length];
+  btn.dataset.state = next.state;
+  btn.textContent = next.icon;
+  const lbl = document.getElementById(lblId);
+  if(lbl) lbl.textContent = next.label;
+  // Auto-open detail panel when first recorded
+  const rowMatch = lblId.match(/lbl-(\d+)/);
+  if(rowMatch) {
+    const idx = rowMatch[1];
+    const det = document.getElementById('det-'+idx);
+    if(det && next.state !== '') det.style.display = '';
+  }
+}
+function miniSpin(id, delta) {
+  const el = document.getElementById(id);
+  const v = parseInt(el.value)||0;
+  el.value = Math.max(0, v+delta);
+  // recalc share
+  const m = id.match(/[cf]*acings-(\d+)/);
+  if(m) calcShare(m[1]);
+}
+function selPos(btn, groupId, val) {
+  document.querySelectorAll('#'+groupId+' .sd-pos').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function calcShare(idx) {
+  const gEl = document.getElementById('facings-'+idx);
+  const cEl = document.getElementById('cfacings-'+idx);
+  if(!gEl||!cEl) return;
+  const g = parseInt(gEl.value)||0;
+  const c = parseInt(cEl.value)||0;
+  const bar = document.getElementById('share-'+idx);
+  const fill = document.getElementById('sfill-'+idx);
+  const pct = document.getElementById('spct-'+idx);
+  if(!bar) return;
+  if(g+c === 0){ bar.style.display='none'; return; }
+  bar.style.display='flex';
+  const share = Math.round(g/(g+c)*100);
+  fill.style.width = share+'%';
+  fill.style.background = share>=50?'var(--green)':share>=30?'var(--yellow)':'var(--red)';
+  pct.textContent = share+'%';
+  pct.style.color = share>=50?'var(--green)':share>=30?'var(--yellow)':'var(--red)';
+}
+
+function getRV(id) {
+  const g = document.getElementById(id);
+  if(!g) return '—';
+  const s = g.querySelector('[class*="s-"]');
+  return s ? s.textContent.trim() : '—';
+}
+
+const SKU_COUNT = 22;
+function getSkus() {
+  const oos=[], low=[], ok=[];
+  for(let i=0;i<SKU_COUNT;i++){
+    const btn = document.getElementById('cyc-'+i);
+    if(!btn) continue;
+    const nm = btn.closest('.sku-row').querySelector('.sku-nm').textContent.trim();
+    const st = btn.dataset.state||'';
+    if(st==='oos') oos.push(nm);
+    else if(st==='low') low.push(nm);
+    else if(st==='ok') ok.push(nm);
+  }
+  return {oos, low, ok};
+}
+function getSkuData() {
+  const rows=[];
+  for(let i=0;i<SKU_COUNT;i++){
+    const btn = document.getElementById('cyc-'+i);
+    if(!btn) continue;
+    const st = btn.dataset.state||'';
+    if(!st) continue;
+    const nm = btn.closest('.sku-row').querySelector('.sku-nm').textContent.trim();
+    const brand = btn.closest('.sku-row').querySelector('.sku-tag').textContent.trim();
+    const price = document.getElementById('price-'+i)?.value||'';
+    const cprice = document.getElementById('cprice-'+i)?.value||'';
+    const fac = document.getElementById('facings-'+i)?.value||'0';
+    const cfac = document.getElementById('cfacings-'+i)?.value||'0';
+    const posBtn = document.querySelector('#pos-'+i+' .sd-pos.active');
+    const pos = posBtn ? posBtn.textContent.trim() : '—';
+    const g=parseInt(fac)||0, c=parseInt(cfac)||0;
+    const share = g+c>0 ? Math.round(g/(g+c)*100)+'%' : '—';
+    rows.push({nm, brand, status:st, price, cprice, fac, cfac, pos, share});
+  }
+  return rows;
+}
+
+function getComps() {
+  return [...document.querySelectorAll('#comp-pressure .comp-tag.active')].map(b=>b.textContent.trim());
+}
+function getCompCats() {
+  return [...document.querySelectorAll('#comp-cat .comp-tag.active')].map(b=>b.textContent.trim());
+}
+
+// ═══════════════════════════════════════════
+// SCORING (WEIGHTED)
+// ═══════════════════════════════════════════
+function calcScore(skus, data) {
+  // Weights: OOS 35%, Shelf 25%, Pricing 15%, Hero SKU 10%, Promo 10%, RTD 5%
+  let fillRate = skus.oos.length === 0 ? 100 : Math.max(0, 100 - (skus.oos.length * 25));
+  let shelfScore = data.visibility === 'Dominante' ? 100 : data.visibility === 'Competitiva' ? 75 : data.visibility === 'Débil' ? 40 : 10;
+  let priceScore = data.price === 'Correcto ✓' ? 100 : data.price === 'Inconsistente' ? 50 : data.price === 'Incorrecto 🔴' ? 0 : 60;
+  let heroScore = skus.ok.length > 0 ? 100 : skus.low.length > 0 ? 50 : 0;
+  let promoScore = data.pop === 'Presente ✓' ? 100 : data.pop === 'Dañado / incorrecto' ? 50 : 20;
+  let rtdScore = selChannel==='heb' ? (data.rtd==='Enfriador + checkout ✓'?100:data.rtd==='Enfriador genérico'?60:10) : 100;
+  return Math.round((fillRate*0.35)+(shelfScore*0.25)+(priceScore*0.15)+(heroScore*0.10)+(promoScore*0.10)+(rtdScore*0.05));
+}
+
+function getSeverity(score, oosCount) {
+  if(oosCount > 0 || score < 50) return {lvl:'🔴 CRÍTICO', cls:'sev-red', label:'Pérdida inmediata de sellout'};
+  if(score < 70) return {lvl:'🟠 MODERADO', cls:'sev-orange', label:'Deterioro de ejecución'};
+  if(score < 85) return {lvl:'🟡 BAJO', cls:'sev-yellow', label:'Oportunidad de mejora visual'};
+  return {lvl:'🟢 SALUDABLE', cls:'sev-green', label:'Ejecución sólida'};
+}
+
+// ═══════════════════════════════════════════
+// OPPORTUNITIES
+// ═══════════════════════════════════════════
+function buildOpps(skus, data, channel) {
+  const opps = [];
+  if(skus.oos.length) opps.push({icon:'🔁', text:`<strong>Reponer urgente:</strong> ${skus.oos.join(', ')} — OOS activo`});
+  if(data.rtd && !data.rtd.includes('checkout') && channel==='heb') opps.push({icon:'❄️', text:`<strong>Mover RTD al enfriador + checkout</strong> — +73% crecimiento en valor`});
+  if(data.creatine==='Ausente 🔴') opps.push({icon:'💊', text:`<strong>Activar ON Creatine en sección</strong> — sección liderada por competidores`});
+  if(data.visibility==='Invisible' || data.visibility==='Débil') opps.push({icon:'👁', text:`<strong>Recuperar espacio eye-level</strong> — visibilidad actual insuficiente`});
+  if(data.comp && data.comp.includes('Birdman')) opps.push({icon:'⚡', text:`<strong>Birdman dominando espacio vegan/funcional</strong> — reforzar comunicación diferencial Isopure`});
+  if(data.display==='Ausente 🔴') opps.push({icon:'🏪', text:`<strong>Reactivar exhibición pagada</strong> — primeros 10 días del mes`});
+  const quickOpp = document.getElementById('quick-opp').value;
+  if(quickOpp) opps.push({icon:'✨', text:`<strong>Campo:</strong> ${quickOpp}`});
+  return opps;
+}
+
+// ═══════════════════════════════════════════
+// RECURRING ISSUES TRACKER
+// ═══════════════════════════════════════════
+function trackIssues(issues) {
+  issues.forEach(i => { recurringIssues[i] = (recurringIssues[i]||0)+1; });
+}
+
+function renderRecurring() {
+  const entries = Object.entries(recurringIssues).sort((a,b)=>b[1]-a[1]);
+  if(!entries.length) return;
+  document.getElementById('rec-issues-card').style.display = '';
+  const tbody = document.getElementById('rec-table');
+  tbody.innerHTML = '<tr><th style="color:var(--muted);font-family:var(--f-mono);font-size:9px;letter-spacing:.1em">ISSUE</th><th style="text-align:right;color:var(--muted);font-family:var(--f-mono);font-size:9px;letter-spacing:.1em">TIENDAS</th></tr>' +
+    entries.map(([k,v])=>`<tr><td>${k}</td><td style="text-align:right"><span class="badge-count">${v}</span></td></tr>`).join('');
+}
+
+// ═══════════════════════════════════════════
+// GENERATE OUTPUTS
+// ═══════════════════════════════════════════
+function generate() {
+  updateStorePill();
+  const store = selStoreName || 'Tienda';
+  const ch = (document.getElementById('chain-input').value ||
+    (() => { const b = document.querySelector('#chain-sel .s-cyan'); return b ? b.textContent.trim() : ''; })() ||
+    selChannel).toUpperCase();
+  const distBtn = document.querySelector('#dist-sel .s-cyan');
+  const dist = distBtn ? distBtn.textContent.trim() : 'Distribuidor';
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-US',{day:'2-digit',month:'short',year:'numeric'});
+  const timeStr = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  const skus = getSkus();
+  const comps = getComps();
+
+  const data = {
+    visibility: getRV('visibility'),
+    price: getRV('price-int'),
+    pop: getRV('pop-ok'),
+    rtd: getRV('rtd-loc'),
+    display: getRV('disp-status'),
+    creatine: getRV('creatine-on'),
+    comp: comps.join(', ')
+  };
+
+  const score = calcScore(skus, data);
+  const sev = getSeverity(score, skus.oos.length);
+  const issues = [];
+  if(skus.oos.length) issues.push(`OOS: ${skus.oos.join(', ')}`);
+  if(data.display.includes('Ausente')) issues.push('Exhibición ausente');
+  if(data.price.includes('Incorrecto')||data.price.includes('Inconsistente')) issues.push('Error de precio');
+  if(data.pop.includes('Ausente')) issues.push('POP faltante');
+  if(data.creatine==='Ausente 🔴') issues.push('ON Creatine ausente');
+  if(data.rtd && !data.rtd.includes('Enfriador')&&selChannel==='heb') issues.push('RTD fuera de refrigeración');
+
+  trackIssues(issues);
+
+  const visitNote = document.getElementById('visit-note').value || '';
+  const facGPN = document.getElementById('facing-gpn').value || '—';
+  const facComp = document.getElementById('facing-comp').value || '—';
+
+  // ── SCORE ROW ──
+  const scColor = score>=85?'sv-green':score>=70?'sv-yellow':score>=50?'sv-orange':'sv-red';
+  document.getElementById('score-grid').innerHTML = `
+    <div class="score-box"><div class="sv ${scColor}">${score}</div><div class="ss">Score DAEXA</div></div>
+    <div class="score-box"><div class="sv ${skus.oos.length?'sv-red':'sv-green'}">${skus.oos.length}</div><div class="ss">OOS</div></div>
+    <div class="score-box"><div class="sv ${data.display.includes('Activa')?'sv-green':'sv-red'}">${data.display.includes('Activa')?'✓':'✕'}</div><div class="ss">Display</div></div>
+    <div class="score-box"><div class="sv ${data.price.includes('Correcto')?'sv-green':'sv-orange'}">${data.price.includes('Correcto')?'✓':'!'}</div><div class="ss">Precio</div></div>
+  `;
+
+  // ── SEVERITY ──
+  document.getElementById('sev-flag').innerHTML = `<span class="sev ${sev.cls}" style="font-size:12px;padding:6px 14px;">${sev.lvl} — ${sev.label}</span>`;
+
+  // ── OPPORTUNITIES ──
+  const opps = buildOpps(skus, data, selChannel);
+  if(opps.length) {
+    document.getElementById('opp-section').style.display = '';
+    document.getElementById('opp-list').innerHTML = opps.map(o=>`<div class="opp-card"><span class="opp-icon">${o.icon}</span><div class="opp-text">${o.text}</div></div>`).join('');
+  }
+
+  const oosLine = skus.oos.length ? `OOS: ${skus.oos.join(' / ')}` : 'Sin OOS';
+  const lowLine = skus.low.length ? `Stock bajo: ${skus.low.join(' / ')}` : '';
+
+  // ── WHATSAPP — 6 líneas máximo, acción primero ──
+  const mainIssue = issues.length ? issues[0] : (skus.low.length ? 'Stock bajo en '+skus.low[0] : 'Sin incidencias críticas');
+  const evidence = issues.length > 0
+    ? (skus.oos.length ? `${skus.oos.length} SKU(s) sin stock: ${skus.oos.slice(0,2).join(', ')}` : `Anaquel ${data.visibility.toLowerCase()} · Precio ${data.price.toLowerCase()} · Display ${data.display.includes('Activa')?'activo':'ausente'}`)
+    : `Anaquel ${data.visibility.toLowerCase()} · Facings GPN ${facGPN} vs Comp ${facComp}`;
+  const impact = skus.oos.length
+    ? `Venta perdida directa — Isopure/ON sin reposición`
+    : issues.some(i=>i.includes('precio'))
+      ? `Riesgo de margen — precio fuera de JBP`
+      : issues.some(i=>i.includes('Exhibición'))
+        ? `Visibilidad comprometida — exhibición pagada inactiva`
+        : `Ejecución por debajo del estándar GPN`;
+  const action = issues.length
+    ? `${dist}: reponer/corregir ${mainIssue.replace(/^OOS: /,'')} hoy`
+    : `Mantener — siguiente visita en ruta`;
+  const timing = issues.length >= 2
+    ? `Escalar si sin respuesta en 24h`
+    : issues.length === 1
+      ? `Confirmar resolución antes de mañana`
+      : `Sin acción urgente`;
+  const wa = `*${store}* · ${dateStr}
+🔴 ${mainIssue}
+📊 ${evidence}
+💸 ${impact}
+✅ ${action}
+⏱ ${timing}${comps.length ? '\n🔍 Competidor activo: '+comps.slice(0,2).join(', ') : ''}`;
+
+  // ── EMAIL / TEAMS ──
+  const email = `Asunto: DAEXA Field Execution — ${store} — ${dateStr}
+
+─────────────────────────────
+D — DISPONIBILIDAD
+${oosLine}
+${lowLine}
+Causa: ${getRV('oos-cause')}
+
+A — ANAQUEL
+Posición: ${getRV('shelf-pos')} | Visibilidad: ${data.visibility}
+Facings GPN: ${facGPN} / Competidor: ${facComp}
+Competidor con presión: ${comps.length?comps.join(', '):'—'}
+${selChannel==='heb'?'ON en creatinas: '+data.creatine:'Top3 >50%: '+getRV('top3')}
+
+EX — EXHIBICIÓN
+Display: ${data.display} | Ubicación: ${getRV('disp-loc')}
+${selChannel==='heb'?'RTD: '+data.rtd:''}
+
+A — ACTIVACIÓN
+Precio: ${data.price} | POP: ${data.pop}
+${selChannel==='gnc'?'Staff recomienda GPN: '+getRV('staff-rec'):'Promo RTD: '+getRV('rtd-promo')}
+─────────────────────────────
+SCORE DAEXA: ${score}/100
+SEVERIDAD: ${sev.lvl}
+ISSUES (${issues.length}): ${issues.join(' | ')||'—'}
+─────────────────────────────
+${opps.length?'OPORTUNIDADES:\n'+opps.map(o=>'→ '+o.text.replace(/<[^>]+>/g,'')).join('\n'):''}
+${visitNote?'\nNOTA DE CAMPO:\n'+visitNote:''}
+
+— GPN Mexico · Dir. Comercial · ${dateStr} ${timeStr}`;
+
+  // ── TXT ──
+  const txt = `DAEXA FIELD REPORT — ${store}
+Fecha: ${dateStr} ${timeStr} | Canal: ${ch} | Dist: ${dist}
+Score: ${score}/100 | Severidad: ${sev.lvl}
+════════════════════════════════
+D — DISPONIBILIDAD
+OOS: ${skus.oos.join(', ')||'NINGUNO'}
+Stock bajo: ${skus.low.join(', ')||'NINGUNO'}
+Causa: ${getRV('oos-cause')}
+
+A — ANAQUEL
+Posición: ${getRV('shelf-pos')} | Visibilidad: ${data.visibility}
+Facings GPN/Comp: ${facGPN}/${facComp}
+Competidor: ${comps.join(', ')||'—'}
+Planograma: ${getRV('plano')}
+
+EX — EXHIBICIONES
+Display: ${data.display} | Tamaño: ${getRV('disp-size')} | Ubicación: ${getRV('disp-loc')}
+${selChannel==='heb'?'RTD: '+data.rtd:''}
+Comp display: ${getRV('comp-disp')}
+
+A — ACTIVACIÓN
+Precio: ${data.price} | POP: ${data.pop}
+${selChannel==='gnc'?'Staff: '+getRV('staff-rec')+' | Nivel: '+getRV('staff-level'):'RTD Promo: '+getRV('rtd-promo')}
+════════════════════════════════
+ISSUES (${issues.length}): ${issues.join(' | ')||'NINGUNO'}
+OPORTUNIDADES:
+${opps.map(o=>'→ '+o.text.replace(/<[^>]+>/g,'')).join('\n')||'—'}
+NOTA: ${visitNote||'—'}`;
+
+  // ── TEAMS ──
+  const compCats = getCompCats();
+  const teams = `**DAEXA Field Execution — ${store}**
+📅 ${dateStr} ${timeStr} | Canal: ${ch} | Distribuidor: ${dist}
+
+**Score DAEXA:** ${score}/100 | **Severidad:** ${sev.lvl}
+
+**D — Disponibilidad**
+- OOS: ${skus.oos.join(', ')||'Sin OOS'}
+${skus.low.length?'- Stock bajo: '+skus.low.join(', '):''}
+- Causa: ${getRV('oos-cause')}
+
+**A — Anaquel**
+- Posición: ${getRV('shelf-pos')} | Visibilidad: ${data.visibility}
+- Facings GPN / Competidor: ${facGPN} / ${facComp}
+- Competidor dominante: ${comps.length?comps.join(', '):'—'}
+${compCats.length?'- Presión de categoría: '+compCats.join(', '):''}
+
+**EX — Exhibición**
+- Display: ${data.display} | Ubicación: ${getRV('disp-loc')}
+${selChannel==='heb'?'- RTD: '+data.rtd:''}
+
+**A — Activación**
+- Precio: ${data.price} | POP: ${data.pop}
+${selChannel==='gnc'?'- Staff recomienda: '+getRV('staff-rec'):'- Promo RTD: '+getRV('rtd-promo')}
+
+${issues.length?'⚠️ **Issues críticos:**\n'+issues.map(i=>'- '+i).join('\n'):'✅ Sin issues críticos'}
+${opps.length?'\n💡 **Oportunidades:**\n'+opps.slice(0,3).map(o=>'- '+o.text.replace(/<[^>]+>/g,'')).join('\n'):''}
+${visitNote?'\n📝 **Nota de campo:** '+visitNote:''}`;
+
+  document.getElementById('out-wa').textContent = wa;
+  document.getElementById('out-email').textContent = email;
+  document.getElementById('out-teams').textContent = teams;
+  document.getElementById('out-txt').textContent = txt;
+
+  // ── CSV ROW ──
+  const rowData = {
+    'Fecha': dateStr, 'Hora': timeStr, 'Tienda': store, 'Canal': ch, 'Distribuidor': dist,
+    'Score_DAEXA': score, 'Severidad': sev.lvl.replace(/🔴|🟠|🟡|🟢/g,'').trim(),
+    'D_OOS_SKUs': skus.oos.join('|')||'NINGUNO',
+    'D_StockBajo_SKUs': skus.low.join('|')||'NINGUNO',
+    'D_OOS_Count': skus.oos.length,
+    'D_Causa_OOS': getRV('oos-cause'),
+    'A_Posicion': getRV('shelf-pos'), 'A_Visibilidad': data.visibility,
+    'A_Facings_GPN': facGPN, 'A_Facings_Comp': facComp,
+    'A_Competidor_Presion': comps.join('|')||'—',
+    'A_Presion_Categoria': getCompCats().join('|')||'—',
+    'A_Planograma': getRV('plano'),
+    'A_Top3_50pct_GNC': getRV('top3'), 'A_IsoD3lb_Domina_HEB': getRV('iso-dom'),
+    'A_ON_Creatinas_HEB': data.creatine,
+    'EX_Display': data.display, 'EX_Tamano': getRV('disp-size'),
+    'EX_Ubicacion': getRV('disp-loc'), 'EX_RTD_HEB': data.rtd,
+    'EX_CompDisplay': getRV('comp-disp'),
+    'AP_Precio': data.price, 'AP_POP': data.pop,
+    'AP_RTD_Promo_HEB': getRV('rtd-promo'), 'AP_Staff_GNC': getRV('staff-rec'),
+    'AP_StaffNivel_GNC': getRV('staff-level'),
+    'Issues_Count': issues.length, 'Issues_Lista': issues.join('|')||'NINGUNO',
+    'Accion_Recomendada': issues.length ? dist+': resolver '+issues[0]+' en 24h' : 'Mantener ejecucion',
+    'Oportunidad': opps.map(o=>o.text.replace(/<[^>]+>/g,'')).join(' | ')||'—',
+    'Nota_Final': visitNote||'—'
+  };
+  const csvRow = CSV_HEADERS.map(h => escCsv(rowData[h]||'—')).join(',');
+  csvRows.push(csvRow);
+  sessionVisits.push({store, score, issues, opps, sev: sev.lvl, comps});
+
+  // ── PUSH TO GOOGLE SHEETS ──
+  pushToSheets(CSV_HEADERS, Object.values(rowData));
+
+  document.getElementById('out-csv').textContent =
+    `Session: ${csvRows.length} visit(s) recorded\nColumns: ${CSV_HEADERS.length}\nLast row: ${csvRow.substring(0,100)}...`;
+  document.getElementById('btn-session-csv').textContent = `⬇ Export Session (${csvRows.length} visit${csvRows.length>1?'s':''})`;
+
+  // ── WEEKLY DIGEST ──
+  updateDigest();
+  renderRecurring();
+
+  goTo(5);
+  document.querySelectorAll('.step-tab').forEach((t,i) => { if(i<5) t.classList.add('done'); });
+}
+
+function updateDigest() {
+  const totalOOS = sessionVisits.reduce((a,v) => a + (v.issues.filter(i=>i.startsWith('OOS')).length>0?1:0), 0);
+  const avgScore = Math.round(sessionVisits.reduce((a,v)=>a+v.score,0)/sessionVisits.length);
+  document.getElementById('visit-count-badge').textContent = sessionVisits.length;
+  document.getElementById('digest-body').innerHTML = `
+    <tr><td>Tiendas visitadas (sesión)</td><td style="color:var(--cyan)">${sessionVisits.length}</td></tr>
+    <tr><td>Score DAEXA promedio</td><td style="color:${avgScore>=70?'var(--green)':'var(--orange)'}">${avgScore}/100</td></tr>
+    <tr><td>Incidentes OOS</td><td style="color:${totalOOS?'var(--red)':'var(--green)'}">${totalOOS}</td></tr>
+    <tr><td>Issues totales acumulados</td><td style="color:var(--orange)">${Object.values(recurringIssues).reduce((a,v)=>a+v,0)}</td></tr>
+    <tr><td>Última tienda visitada</td><td style="color:var(--text)">${sessionVisits[sessionVisits.length-1].store}</td></tr>
+  `;
+  const topComp = sessionVisits.reduce((acc,v)=>{
+    (v.comps||[]).forEach(c=>{ acc[c]=(acc[c]||0)+1; }); return acc;
+  }, {});
+  const topCompStr = Object.entries(topComp).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,v])=>k+' ('+v+')').join(', ')||'—';
+  const digestTxt = `DAEXA WEEKLY DIGEST — Session ${new Date().toLocaleDateString('es-MX')}
+════════════════════════════════
+Stores visited: ${sessionVisits.length}
+Avg DAEXA Score: ${avgScore}/100
+OOS incidents: ${totalOOS}
+Total issues: ${Object.values(recurringIssues).reduce((a,v)=>a+v,0)}
+Top competitors: ${topCompStr}
+
+TOP RECURRING ISSUES:
+${Object.entries(recurringIssues).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`  • ${k}: ${v} tienda(s)`).join('\n')||'  • No patterns yet'}
+
+STORES VISITED:
+${sessionVisits.map((v,i)=>`  ${i+1}. ${v.store} — Score: ${v.score}/100 — ${v.sev}`).join('\n')}
+
+IMMEDIATE NEXT STEPS:
+${Object.entries(recurringIssues).filter(([,v])=>v>=2).length ? Object.entries(recurringIssues).filter(([,v])=>v>=2).map(([k,v])=>`  → Escalate to distributor: "${k}" detected in ${v} stores`).join('\n') : '  → No recurring critical patterns yet'}
+
+— GPN Sales Mexico · Commercial Director`;
+  document.getElementById('digest-out-hidden').value = digestTxt;
+}
+
+// ═══════════════════════════════════════════
+// GOOGLE SHEETS SYNC
+// ═══════════════════════════════════════════
+function pushToSheets(headers, row) {
+  const indicator = document.getElementById('sheets-indicator');
+  if(indicator) { indicator.textContent = '⟳ Syncing...'; indicator.style.color = 'var(--yellow)'; }
+  fetch(SHEETS_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({headers, row})
+  })
+  .then(() => {
+    if(indicator) { indicator.textContent = '✓ Synced to Sheets'; indicator.style.color = 'var(--green)'; }
+  })
+  .catch(() => {
+    if(indicator) { indicator.textContent = '✗ Sync failed — use CSV'; indicator.style.color = 'var(--red)'; }
+  });
+}
+
+function pushSkuRowsToSheets(skuData, meta) {
+  const skuHeaders = ['Date','City','Chain','Store','Distributor','Brand','SKU','Status','GPN_Price','Comp_Price','Price_Diff','GPN_Facings','Comp_Facings','Share_pct','Shelf_Position'];
+  skuData.forEach((s, i) => {
+    const diff = (s.price && s.cprice) ? (parseInt(s.price) - parseInt(s.cprice)) : '—';
+    const row = [
+      meta.date, meta.city, meta.chain, meta.store, meta.dist,
+      s.brand, s.nm,
+      s.status==='ok'?'In Stock':s.status==='low'?'Low Stock':'OOS',
+      s.price||'—', s.cprice||'—', diff,
+      s.fac, s.cfac, s.share, s.pos
+    ];
+    setTimeout(() => {
+      fetch(SHEETS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({headers: i===0 ? skuHeaders : null, row})
+      }).catch(()=>{});
+    }, i * 200);
+  });
+}
+
+// ═══════════════════════════════════════════
+// EXPORTS
+// ═══════════════════════════════════════════
+function escCsv(v) {
+  const s = String(v||'').replace(/"/g,'""');
+  return (s.includes(',')||s.includes('"')||s.includes('\n')) ? `"${s}"` : s;
+}
+function dlCsv() {
+  const storeName = (selStoreName||'tienda').replace(/\s+/g,'_').replace(/[^\w]/g,'');
+  const d = new Date().toISOString().slice(0,10);
+  const content = '\uFEFF' + CSV_HEADERS.join(',') + '\n' + csvRows[csvRows.length-1];
+  dlFile(`DAEXA_${storeName}_${d}.csv`, content, 'text/csv;charset=utf-8;');
+}
+function dlSessionCsv() {
+  const d = new Date().toISOString().slice(0,10);
+  const content = '\uFEFF' + CSV_HEADERS.join(',') + '\n' + csvRows.join('\n');
+  dlFile(`DAEXA_SESION_${d}_${csvRows.length}tiendas.csv`, content, 'text/csv;charset=utf-8;');
+}
+function pushSkuNow() {
+  const skuData = getSkuData();
+  if(!skuData.length){ alert('No SKU data recorded yet. Tap at least one SKU status first.'); return; }
+  const city = document.getElementById('city-input').value ||
+    (() => { const b=document.querySelector('#city-sel .s-cyan'); return b?b.textContent.trim():''; })();
+  const chain = document.getElementById('chain-input').value ||
+    (() => { const b=document.querySelector('#chain-sel .s-cyan'); return b?b.textContent.trim():''; })();
+  const distBtn = document.querySelector('#dist-sel .s-cyan');
+  const dist = distBtn ? distBtn.textContent.trim() : '—';
+  const meta = {
+    date: new Date().toLocaleDateString('en-US'),
+    city, chain,
+    store: selStoreName,
+    dist
+  };
+  pushSkuRowsToSheets(skuData, meta);
+  const ind = document.getElementById('sheets-indicator');
+  if(ind){ ind.textContent = `⟳ Pushing ${skuData.length} SKU rows...`; ind.style.color='var(--yellow)'; }
+  setTimeout(()=>{
+    if(ind){ ind.textContent = `✓ ${skuData.length} SKU rows sent to Sheets`; ind.style.color='var(--green)'; }
+  }, skuData.length * 200 + 500);
+}
+
+function dlSkuCsv() {
+  const d = new Date().toISOString().slice(0,10);
+  const storeName = (selStoreName||'store').replace(/\s+/g,'_').replace(/[^\w]/g,'');
+  const headers = ['Date','City','Chain','Store','Distributor','Brand','SKU','Status','GPN_Price','Comp_Price','Price_Diff','GPN_Facings','Comp_Facings','Share_pct','Shelf_Position'];
+  const city = document.getElementById('city-input').value || (() => { const b=document.querySelector('#city-sel .s-cyan'); return b?b.textContent.trim():''; })();
+  const chain = document.getElementById('chain-input').value || (() => { const b=document.querySelector('#chain-sel .s-cyan'); return b?b.textContent.trim():''; })();
+  const dt = new Date().toLocaleDateString('en-US');
+  const distBtn = document.querySelector('#dist-sel .s-cyan');
+  const dist = distBtn ? distBtn.textContent.trim() : '—';
+  const skuData = getSkuData();
+  if(!skuData.length){ alert('No SKUs recorded yet.'); return; }
+  const rows = skuData.map(s => {
+    const diff = (s.price&&s.cprice) ? (parseInt(s.price)-parseInt(s.cprice)) : '—';
+    return [dt,city,chain,selStoreName,dist,s.brand,s.nm,s.status==='ok'?'In Stock':s.status==='low'?'Low Stock':'OOS',
+      s.price||'—',s.cprice||'—',diff,s.fac,s.cfac,s.share,s.pos].map(v=>escCsv(v)).join(',');
+  });
+  const content = '\uFEFF' + headers.join(',') + '\n' + rows.join('\n');
+  dlFile(`DAEXA_SKU_${storeName}_${d}.csv`, content, 'text/csv;charset=utf-8;');
+}
+function dlTxt() {
+  const storeName = (selStoreName||'tienda').replace(/\s+/g,'_').replace(/[^\w]/g,'');
+  const d = new Date().toISOString().slice(0,10);
+  dlFile(`DAEXA_${storeName}_${d}.txt`, document.getElementById('out-txt').textContent, 'text/plain;charset=utf-8;');
+}
+function dlWeeklyTxt() {
+  const d = new Date().toISOString().slice(0,10);
+  dlFile(`DAEXA_WeeklyDigest_${d}.txt`, document.getElementById('digest-out-hidden').value, 'text/plain;charset=utf-8;');
+}
+function dlFile(name, content, type) {
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download=name; a.click();
+  URL.revokeObjectURL(url);
+}
+function cpText(id) {
+  const el = document.getElementById(id);
+  const text = el.tagName==='TEXTAREA' ? el.value : el.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    // subtle flash feedback
+  });
+}
+function cpCsvRow() {
+  navigator.clipboard.writeText(csvRows[csvRows.length-1]||'');
+}
+function cpHeaders() {
+  navigator.clipboard.writeText(CSV_HEADERS.join(','));
+}
+
+// ═══════════════════════════════════════════
+// NEW VISIT
+// ═══════════════════════════════════════════
+function newVisit() {
+  document.querySelectorAll('.sc').forEach(c=>c.classList.remove('sel'));
+  document.querySelectorAll('.sel-btn').forEach(b=>b.classList.remove('s-green','s-red','s-orange','s-yellow','s-blue','s-cyan'));
+  document.querySelectorAll('.sku-cycle').forEach(b=>{
+    b.dataset.state=''; b.textContent='—';
+  });
+  document.querySelectorAll('.sku-state-label').forEach(l=>{ l.textContent='— not recorded'; });
+  document.querySelectorAll('.sku-detail').forEach(d=>{ d.style.display='none'; });
+  document.querySelectorAll('.sd-input').forEach(i=>{ i.value = i.type==='number'&&i.id.startsWith('fac')?'0':''; });
+  document.querySelectorAll('.sd-pos').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.sku-share-bar').forEach(b=>{ b.style.display='none'; });
+  document.querySelectorAll('.comp-tag').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('#comp-cat .comp-tag').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('textarea').forEach(t=>t.value='');
+  document.querySelectorAll('input[type="number"]').forEach(i=>i.value='');
+  document.querySelectorAll('.step-tab').forEach(t=>t.classList.remove('done','active'));
+  selStoreName=''; selChannel='';
+  document.getElementById('top-store').textContent='No store selected';
+  document.getElementById('top-store').className='store-pill';
+  document.getElementById('opp-section').style.display='none';
+  goTo(0);
+  document.getElementById('btn-next').style.display='';
+}
+
+// INIT
+document.getElementById('visit-dt').value = new Date().toISOString().slice(0,16);
+const ind = document.getElementById('sheets-indicator');
+if(ind) ind.style.color = 'var(--green)';
+</script>
+</body>
+</html>
