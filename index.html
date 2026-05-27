@@ -2,8 +2,9 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="version" content="2.1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>DAEXA · Glanbia Performance Nutrition</title>
+<title>DAEXA · GPN Sales Mexico</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -166,6 +167,7 @@ body {
   -webkit-tap-highlight-color: transparent; touch-action: manipulation;
 }
 .sel-btn:hover { border-color: var(--border2); color: var(--text); background: var(--surface2); }
+.sel-btn:active { opacity: 0.75; transform: scale(0.97); }
 .sel-btn.s-green { border-color: var(--green); color: var(--green); background: var(--green-bg); }
 .sel-btn.s-red { border-color: var(--red); color: var(--red); background: var(--red-bg); }
 .sel-btn.s-orange { border-color: var(--orange); color: var(--orange); background: var(--orange-bg); }
@@ -399,12 +401,12 @@ body {
 
   <!-- STEP TABS -->
   <div class="step-tabs">
-    <div class="step-tab active" onclick="goTo(0)" id="tab-0"><span class="tl">①</span><span>Store</span></div>
-    <div class="step-tab" onclick="goTo(1)" id="tab-1"><span class="tl">D</span><span>Avail.</span></div>
-    <div class="step-tab" onclick="goTo(2)" id="tab-2"><span class="tl">A</span><span>Shelf</span></div>
-    <div class="step-tab" onclick="goTo(3)" id="tab-3"><span class="tl">EX</span><span>Display</span></div>
-    <div class="step-tab" onclick="goTo(4)" id="tab-4"><span class="tl">A</span><span>Promo</span></div>
-    <div class="step-tab" onclick="goTo(5)" id="tab-5"><span class="tl">↗</span><span>Report</span></div>
+    <button type="button" class="step-tab active" onclick="goTo(0)" id="tab-0"><span class="tl">①</span><span>Store</span></div>
+    <button type="button" class="step-tab" onclick="goTo(1)" id="tab-1"><span class="tl">D</span><span>Avail.</span></div>
+    <button type="button" class="step-tab" onclick="goTo(2)" id="tab-2"><span class="tl">A</span><span>Shelf</span></div>
+    <button type="button" class="step-tab" onclick="goTo(3)" id="tab-3"><span class="tl">EX</span><span>Display</span></div>
+    <button type="button" class="step-tab" onclick="goTo(4)" id="tab-4"><span class="tl">A</span><span>Promo</span></div>
+    <button type="button" class="step-tab" onclick="goTo(5)" id="tab-5"><span class="tl">↗</span><span>Report</span></button>
   </div>
 
   <div class="scroll-area">
@@ -418,11 +420,11 @@ body {
       <div class="field">
         <div class="fl">City</div>
         <div class="sel-group" id="city-sel" style="margin-bottom:8px;">
-          <button class="sel-btn" onclick="selCityBtn(this,'Guadalajara')">Guadalajara</button>
-          <button class="sel-btn" onclick="selCityBtn(this,'Ciudad de México')">CDMX</button>
-          <button class="sel-btn" onclick="selCityBtn(this,'Monterrey')">Monterrey</button>
-          <button class="sel-btn" onclick="selCityBtn(this,'Querétaro')">Querétaro</button>
-          <button class="sel-btn" onclick="selCityBtn(this,'Other')">Other</button>
+          <button type="button" class="sel-btn" onclick="selCityBtn(this,'Guadalajara')">Guadalajara</button>
+          <button type="button" class="sel-btn" onclick="selCityBtn(this,'Ciudad de México')">CDMX</button>
+          <button type="button" class="sel-btn" onclick="selCityBtn(this,'Monterrey')">Monterrey</button>
+          <button type="button" class="sel-btn" onclick="selCityBtn(this,'Querétaro')">Querétaro</button>
+          <button type="button" class="sel-btn" onclick="selCityBtn(this,'Other')">Other</button>
         </div>
         <input class="txt-input" id="city-input" placeholder="Type city name..." style="height:44px;display:none;" oninput="updateStorePill()">
       </div>
@@ -430,34 +432,34 @@ body {
       <div class="field">
         <div class="fl">Chain / Channel</div>
         <div class="sel-group" id="chain-sel" style="margin-bottom:8px;">
-          <button class="sel-btn" onclick="selChainBtn(this,'GNC')">GNC</button>
-          <button class="sel-btn" onclick="selChainBtn(this,'HEB')">HEB</button>
-          <button class="sel-btn" onclick="selChainBtn(this,'Walmart')">Walmart</button>
-          <button class="sel-btn" onclick="selChainBtn(this,'Sam's Club')">Sam's</button>
-          <button class="sel-btn" onclick="selChainBtn(this,'Costco')">Costco</button>
-          <button class="sel-btn" onclick="selChainBtn(this,'Chedraui')">Chedraui</button>
-          <button class="sel-btn" onclick="selChainBtn(this,'Farmacias del Ahorro')">Fcia. Ahorro</button>
-          <button class="sel-btn" onclick="selChainBtn(this,'Farmacia San Pablo')">Fcia. San Pablo</button>
-          <button class="sel-btn" onclick="selChainBtn(this,'Suplementos MX')">Suplementos MX</button>
-          <button class="sel-btn" onclick="selChainBtn(this,'Other')">Other</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'GNC')">GNC</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'HEB')">HEB</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'Walmart')">Walmart</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'Sam's Club')">Sam's</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'Costco')">Costco</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'Chedraui')">Chedraui</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'Farmacias del Ahorro')">Fcia. Ahorro</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'Farmacia San Pablo')">Fcia. San Pablo</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'Suplementos MX')">Suplementos MX</button>
+          <button type="button" class="sel-btn" onclick="selChainBtn(this,'Other')">Other</button>
         </div>
         <input class="txt-input" id="chain-input" placeholder="Chain or channel name..." style="height:44px;display:none;" oninput="updateStorePill()">
       </div>
 
       <div class="field">
         <div class="fl">Store Name / Location</div>
-        <input class="txt-input" id="store-name-input" placeholder="e.g. GNC Andares, Chedraui Acueducto..." style="height:44px;" oninput="updateStorePill()">
+        <input class="txt-input" id="store-name-input" placeholder="e.g. GNC Andares, Chedraui Acueducto..." style="height:44px;" oninput="updateStorePill(); document.getElementById('btn-next').textContent = 'D — Availability →';">
       </div>
 
       <div class="field">
         <div class="fl">Distributor</div>
         <div class="sel-group" id="dist-sel">
-          <button class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Maxiva</button>
-          <button class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Zembor</button>
-          <button class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Gimpack</button>
-          <button class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Raymex</button>
-          <button class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Directo</button>
-          <button class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Unknown</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Maxiva</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Zembor</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Gimpack</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Raymex</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Directo</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'dist-sel','cyan')">Unknown</button>
         </div>
       </div>
 
@@ -485,7 +487,7 @@ body {
                   <span class="sku-state-label" id="lbl-0">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-0" onclick="event.stopPropagation();cycleSku(this,'lbl-0')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-0" onclick="event.stopPropagation();cycleSku(this,'lbl-0')">—</button>
             </div>
             <div class="sku-detail" id="det-0" style="display:none;">
               <div class="sku-detail-grid">
@@ -506,27 +508,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-0',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-0',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-0" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-0',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-0',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-0',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-0',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-0" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-0',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-0',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-0">
-                  <button class="sd-pos" onclick="selPos(this,'pos-0','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-0','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-0','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-0','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-0','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-0','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-0','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-0','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-0" style="display:none;">
@@ -545,7 +547,7 @@ body {
                   <span class="sku-state-label" id="lbl-1">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-1" onclick="event.stopPropagation();cycleSku(this,'lbl-1')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-1" onclick="event.stopPropagation();cycleSku(this,'lbl-1')">—</button>
             </div>
             <div class="sku-detail" id="det-1" style="display:none;">
               <div class="sku-detail-grid">
@@ -566,27 +568,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-1',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-1',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-1" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-1',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-1',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-1',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-1',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-1" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-1',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-1',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-1">
-                  <button class="sd-pos" onclick="selPos(this,'pos-1','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-1','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-1','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-1','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-1','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-1','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-1','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-1','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-1" style="display:none;">
@@ -605,7 +607,7 @@ body {
                   <span class="sku-state-label" id="lbl-2">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-2" onclick="event.stopPropagation();cycleSku(this,'lbl-2')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-2" onclick="event.stopPropagation();cycleSku(this,'lbl-2')">—</button>
             </div>
             <div class="sku-detail" id="det-2" style="display:none;">
               <div class="sku-detail-grid">
@@ -626,27 +628,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-2',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-2',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-2" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-2',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-2',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-2',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-2',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-2" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-2',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-2',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-2">
-                  <button class="sd-pos" onclick="selPos(this,'pos-2','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-2','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-2','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-2','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-2','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-2','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-2','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-2','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-2" style="display:none;">
@@ -665,7 +667,7 @@ body {
                   <span class="sku-state-label" id="lbl-3">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-3" onclick="event.stopPropagation();cycleSku(this,'lbl-3')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-3" onclick="event.stopPropagation();cycleSku(this,'lbl-3')">—</button>
             </div>
             <div class="sku-detail" id="det-3" style="display:none;">
               <div class="sku-detail-grid">
@@ -686,27 +688,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-3',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-3',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-3" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-3',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-3',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-3',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-3',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-3" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-3',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-3',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-3">
-                  <button class="sd-pos" onclick="selPos(this,'pos-3','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-3','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-3','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-3','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-3','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-3','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-3','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-3','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-3" style="display:none;">
@@ -725,7 +727,7 @@ body {
                   <span class="sku-state-label" id="lbl-4">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-4" onclick="event.stopPropagation();cycleSku(this,'lbl-4')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-4" onclick="event.stopPropagation();cycleSku(this,'lbl-4')">—</button>
             </div>
             <div class="sku-detail" id="det-4" style="display:none;">
               <div class="sku-detail-grid">
@@ -746,27 +748,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-4',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-4',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-4" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-4',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-4',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-4',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-4',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-4" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-4',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-4',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-4">
-                  <button class="sd-pos" onclick="selPos(this,'pos-4','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-4','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-4','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-4','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-4','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-4','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-4','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-4','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-4" style="display:none;">
@@ -785,7 +787,7 @@ body {
                   <span class="sku-state-label" id="lbl-5">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-5" onclick="event.stopPropagation();cycleSku(this,'lbl-5')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-5" onclick="event.stopPropagation();cycleSku(this,'lbl-5')">—</button>
             </div>
             <div class="sku-detail" id="det-5" style="display:none;">
               <div class="sku-detail-grid">
@@ -806,27 +808,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-5',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-5',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-5" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-5',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-5',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-5',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-5',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-5" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-5',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-5',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-5">
-                  <button class="sd-pos" onclick="selPos(this,'pos-5','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-5','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-5','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-5','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-5','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-5','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-5','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-5','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-5" style="display:none;">
@@ -845,7 +847,7 @@ body {
                   <span class="sku-state-label" id="lbl-6">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-6" onclick="event.stopPropagation();cycleSku(this,'lbl-6')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-6" onclick="event.stopPropagation();cycleSku(this,'lbl-6')">—</button>
             </div>
             <div class="sku-detail" id="det-6" style="display:none;">
               <div class="sku-detail-grid">
@@ -866,27 +868,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-6',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-6',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-6" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-6',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-6',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-6',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-6',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-6" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-6',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-6',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-6">
-                  <button class="sd-pos" onclick="selPos(this,'pos-6','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-6','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-6','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-6','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-6','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-6','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-6','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-6','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-6" style="display:none;">
@@ -905,7 +907,7 @@ body {
                   <span class="sku-state-label" id="lbl-7">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-7" onclick="event.stopPropagation();cycleSku(this,'lbl-7')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-7" onclick="event.stopPropagation();cycleSku(this,'lbl-7')">—</button>
             </div>
             <div class="sku-detail" id="det-7" style="display:none;">
               <div class="sku-detail-grid">
@@ -926,27 +928,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-7',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-7',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-7" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-7',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-7',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-7',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-7',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-7" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-7',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-7',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-7">
-                  <button class="sd-pos" onclick="selPos(this,'pos-7','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-7','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-7','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-7','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-7','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-7','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-7','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-7','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-7" style="display:none;">
@@ -965,7 +967,7 @@ body {
                   <span class="sku-state-label" id="lbl-8">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-8" onclick="event.stopPropagation();cycleSku(this,'lbl-8')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-8" onclick="event.stopPropagation();cycleSku(this,'lbl-8')">—</button>
             </div>
             <div class="sku-detail" id="det-8" style="display:none;">
               <div class="sku-detail-grid">
@@ -986,27 +988,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-8',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-8',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-8" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-8',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-8',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-8',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-8',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-8" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-8',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-8',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-8">
-                  <button class="sd-pos" onclick="selPos(this,'pos-8','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-8','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-8','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-8','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-8','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-8','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-8','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-8','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-8" style="display:none;">
@@ -1025,7 +1027,7 @@ body {
                   <span class="sku-state-label" id="lbl-9">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-9" onclick="event.stopPropagation();cycleSku(this,'lbl-9')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-9" onclick="event.stopPropagation();cycleSku(this,'lbl-9')">—</button>
             </div>
             <div class="sku-detail" id="det-9" style="display:none;">
               <div class="sku-detail-grid">
@@ -1046,27 +1048,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-9',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-9',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-9" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-9',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-9',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-9',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-9',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-9" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-9',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-9',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-9">
-                  <button class="sd-pos" onclick="selPos(this,'pos-9','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-9','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-9','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-9','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-9','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-9','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-9','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-9','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-9" style="display:none;">
@@ -1085,7 +1087,7 @@ body {
                   <span class="sku-state-label" id="lbl-10">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-10" onclick="event.stopPropagation();cycleSku(this,'lbl-10')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-10" onclick="event.stopPropagation();cycleSku(this,'lbl-10')">—</button>
             </div>
             <div class="sku-detail" id="det-10" style="display:none;">
               <div class="sku-detail-grid">
@@ -1106,27 +1108,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-10',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-10',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-10" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-10',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-10',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-10',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-10',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-10" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-10',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-10',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-10">
-                  <button class="sd-pos" onclick="selPos(this,'pos-10','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-10','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-10','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-10','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-10','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-10','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-10','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-10','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-10" style="display:none;">
@@ -1145,7 +1147,7 @@ body {
                   <span class="sku-state-label" id="lbl-11">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-11" onclick="event.stopPropagation();cycleSku(this,'lbl-11')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-11" onclick="event.stopPropagation();cycleSku(this,'lbl-11')">—</button>
             </div>
             <div class="sku-detail" id="det-11" style="display:none;">
               <div class="sku-detail-grid">
@@ -1166,27 +1168,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-11',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-11',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-11" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-11',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-11',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-11',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-11',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-11" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-11',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-11',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-11">
-                  <button class="sd-pos" onclick="selPos(this,'pos-11','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-11','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-11','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-11','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-11','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-11','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-11','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-11','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-11" style="display:none;">
@@ -1205,7 +1207,7 @@ body {
                   <span class="sku-state-label" id="lbl-12">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-12" onclick="event.stopPropagation();cycleSku(this,'lbl-12')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-12" onclick="event.stopPropagation();cycleSku(this,'lbl-12')">—</button>
             </div>
             <div class="sku-detail" id="det-12" style="display:none;">
               <div class="sku-detail-grid">
@@ -1226,27 +1228,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-12',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-12',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-12" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-12',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-12',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-12',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-12',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-12" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-12',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-12',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-12">
-                  <button class="sd-pos" onclick="selPos(this,'pos-12','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-12','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-12','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-12','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-12','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-12','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-12','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-12','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-12" style="display:none;">
@@ -1265,7 +1267,7 @@ body {
                   <span class="sku-state-label" id="lbl-13">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-13" onclick="event.stopPropagation();cycleSku(this,'lbl-13')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-13" onclick="event.stopPropagation();cycleSku(this,'lbl-13')">—</button>
             </div>
             <div class="sku-detail" id="det-13" style="display:none;">
               <div class="sku-detail-grid">
@@ -1286,27 +1288,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-13',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-13',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-13" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-13',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-13',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-13',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-13',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-13" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-13',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-13',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-13">
-                  <button class="sd-pos" onclick="selPos(this,'pos-13','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-13','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-13','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-13','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-13','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-13','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-13','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-13','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-13" style="display:none;">
@@ -1325,7 +1327,7 @@ body {
                   <span class="sku-state-label" id="lbl-14">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-14" onclick="event.stopPropagation();cycleSku(this,'lbl-14')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-14" onclick="event.stopPropagation();cycleSku(this,'lbl-14')">—</button>
             </div>
             <div class="sku-detail" id="det-14" style="display:none;">
               <div class="sku-detail-grid">
@@ -1346,27 +1348,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-14',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-14',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-14" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-14',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-14',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-14',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-14',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-14" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-14',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-14',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-14">
-                  <button class="sd-pos" onclick="selPos(this,'pos-14','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-14','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-14','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-14','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-14','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-14','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-14','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-14','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-14" style="display:none;">
@@ -1385,7 +1387,7 @@ body {
                   <span class="sku-state-label" id="lbl-15">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-15" onclick="event.stopPropagation();cycleSku(this,'lbl-15')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-15" onclick="event.stopPropagation();cycleSku(this,'lbl-15')">—</button>
             </div>
             <div class="sku-detail" id="det-15" style="display:none;">
               <div class="sku-detail-grid">
@@ -1406,27 +1408,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-15',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-15',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-15" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-15',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-15',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-15',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-15',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-15" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-15',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-15',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-15">
-                  <button class="sd-pos" onclick="selPos(this,'pos-15','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-15','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-15','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-15','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-15','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-15','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-15','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-15','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-15" style="display:none;">
@@ -1445,7 +1447,7 @@ body {
                   <span class="sku-state-label" id="lbl-16">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-16" onclick="event.stopPropagation();cycleSku(this,'lbl-16')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-16" onclick="event.stopPropagation();cycleSku(this,'lbl-16')">—</button>
             </div>
             <div class="sku-detail" id="det-16" style="display:none;">
               <div class="sku-detail-grid">
@@ -1466,27 +1468,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-16',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-16',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-16" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-16',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-16',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-16',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-16',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-16" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-16',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-16',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-16">
-                  <button class="sd-pos" onclick="selPos(this,'pos-16','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-16','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-16','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-16','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-16','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-16','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-16','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-16','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-16" style="display:none;">
@@ -1505,7 +1507,7 @@ body {
                   <span class="sku-state-label" id="lbl-17">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-17" onclick="event.stopPropagation();cycleSku(this,'lbl-17')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-17" onclick="event.stopPropagation();cycleSku(this,'lbl-17')">—</button>
             </div>
             <div class="sku-detail" id="det-17" style="display:none;">
               <div class="sku-detail-grid">
@@ -1526,27 +1528,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-17',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-17',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-17" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-17',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-17',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-17',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-17',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-17" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-17',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-17',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-17">
-                  <button class="sd-pos" onclick="selPos(this,'pos-17','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-17','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-17','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-17','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-17','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-17','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-17','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-17','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-17" style="display:none;">
@@ -1565,7 +1567,7 @@ body {
                   <span class="sku-state-label" id="lbl-18">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-18" onclick="event.stopPropagation();cycleSku(this,'lbl-18')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-18" onclick="event.stopPropagation();cycleSku(this,'lbl-18')">—</button>
             </div>
             <div class="sku-detail" id="det-18" style="display:none;">
               <div class="sku-detail-grid">
@@ -1586,27 +1588,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-18',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-18',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-18" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-18',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-18',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-18',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-18',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-18" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-18',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-18',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-18">
-                  <button class="sd-pos" onclick="selPos(this,'pos-18','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-18','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-18','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-18','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-18','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-18','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-18','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-18','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-18" style="display:none;">
@@ -1625,7 +1627,7 @@ body {
                   <span class="sku-state-label" id="lbl-19">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-19" onclick="event.stopPropagation();cycleSku(this,'lbl-19')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-19" onclick="event.stopPropagation();cycleSku(this,'lbl-19')">—</button>
             </div>
             <div class="sku-detail" id="det-19" style="display:none;">
               <div class="sku-detail-grid">
@@ -1646,27 +1648,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-19',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-19',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-19" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-19',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-19',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-19',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-19',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-19" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-19',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-19',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-19">
-                  <button class="sd-pos" onclick="selPos(this,'pos-19','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-19','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-19','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-19','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-19','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-19','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-19','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-19','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-19" style="display:none;">
@@ -1685,7 +1687,7 @@ body {
                   <span class="sku-state-label" id="lbl-20">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-20" onclick="event.stopPropagation();cycleSku(this,'lbl-20')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-20" onclick="event.stopPropagation();cycleSku(this,'lbl-20')">—</button>
             </div>
             <div class="sku-detail" id="det-20" style="display:none;">
               <div class="sku-detail-grid">
@@ -1706,27 +1708,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-20',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-20',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-20" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-20',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-20',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-20',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-20',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-20" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-20',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-20',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-20">
-                  <button class="sd-pos" onclick="selPos(this,'pos-20','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-20','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-20','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-20','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-20','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-20','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-20','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-20','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-20" style="display:none;">
@@ -1745,7 +1747,7 @@ body {
                   <span class="sku-state-label" id="lbl-21">— not recorded</span>
                 </div>
               </div>
-              <button class="sku-cycle" data-state="" id="cyc-21" onclick="event.stopPropagation();cycleSku(this,'lbl-21')">—</button>
+              <button type="button" class="sku-cycle" data-state="" id="cyc-21" onclick="event.stopPropagation();cycleSku(this,'lbl-21')">—</button>
             </div>
             <div class="sku-detail" id="det-21" style="display:none;">
               <div class="sku-detail-grid">
@@ -1766,27 +1768,27 @@ body {
                 <div class="sku-detail-col">
                   <div class="sdl">GPN Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('facings-21',-1)">−</button>
+                    <button type="button" onclick="miniSpin('facings-21',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="facings-21" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('facings-21',1)">+</button>
+                    <button type="button" onclick="miniSpin('facings-21',1)">+</button>
                   </div>
                 </div>
                 <div class="sku-detail-col">
                   <div class="sdl">Comp. Facings</div>
                   <div class="mini-spin">
-                    <button onclick="miniSpin('cfacings-21',-1)">−</button>
+                    <button type="button" onclick="miniSpin('cfacings-21',-1)">−</button>
                     <input class="sd-input" type="number" oninput="calcShare(this.id.split('-')[1])" id="cfacings-21" value="0" min="0" step="1" style="text-align:center;">
-                    <button onclick="miniSpin('cfacings-21',1)">+</button>
+                    <button type="button" onclick="miniSpin('cfacings-21',1)">+</button>
                   </div>
                 </div>
               </div>
               <div style="margin-top:8px;">
                 <div class="sdl">Shelf Position</div>
                 <div class="sd-pos-group" id="pos-21">
-                  <button class="sd-pos" onclick="selPos(this,'pos-21','Eye level')">Eye</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-21','Mid shelf')">Mid</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-21','Low shelf')">Low</button>
-                  <button class="sd-pos" onclick="selPos(this,'pos-21','Floor')">Floor</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-21','Eye level')">Eye</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-21','Mid shelf')">Mid</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-21','Low shelf')">Low</button>
+                  <button type="button" class="sd-pos" onclick="selPos(this,'pos-21','Floor')">Floor</button>
                 </div>
               </div>
               <div class="sku-share-bar" id="share-21" style="display:none;">
@@ -1816,11 +1818,11 @@ body {
       <div class="field">
         <div class="fl">OOS Root Cause (if any)</div>
         <div class="sel-group" id="oos-cause">
-          <button class="sel-btn" onclick="selBtn(this,'oos-cause','green')">No OOS</button>
-          <button class="sel-btn" onclick="selBtn(this,'oos-cause','red')">Delivery failure</button>
-          <button class="sel-btn" onclick="selBtn(this,'oos-cause','red')">Not restocked</button>
-          <button class="sel-btn" onclick="selBtn(this,'oos-cause','orange')">Phantom stock</button>
-          <button class="sel-btn" onclick="selBtn(this,'oos-cause','yellow')">Unconfirmed</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'oos-cause','green')">No OOS</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'oos-cause','red')">Delivery failure</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'oos-cause','red')">Not restocked</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'oos-cause','orange')">Phantom stock</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'oos-cause','yellow')">Unconfirmed</button>
         </div>
       </div>
     </div>
@@ -1834,20 +1836,20 @@ body {
       <div class="field">
         <div class="fl">Shelf Position (overall brand)</div>
         <div class="sel-group" id="shelf-pos">
-          <button class="sel-btn" onclick="selBtn(this,'shelf-pos','green')">Eye level ✓</button>
-          <button class="sel-btn" onclick="selBtn(this,'shelf-pos','yellow')">Mid shelf</button>
-          <button class="sel-btn" onclick="selBtn(this,'shelf-pos','orange')">Low shelf</button>
-          <button class="sel-btn" onclick="selBtn(this,'shelf-pos','red')">Floor / dead zone</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'shelf-pos','green')">Eye level ✓</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'shelf-pos','yellow')">Mid shelf</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'shelf-pos','orange')">Low shelf</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'shelf-pos','red')">Floor / dead zone</button>
         </div>
       </div>
 
       <div class="field">
         <div class="fl">Brand Visibility</div>
         <div class="sel-group" id="visibility">
-          <button class="sel-btn" onclick="selBtn(this,'visibility','green')">Dominant</button>
-          <button class="sel-btn" onclick="selBtn(this,'visibility','cyan')">Competitive</button>
-          <button class="sel-btn" onclick="selBtn(this,'visibility','orange')">Weak</button>
-          <button class="sel-btn" onclick="selBtn(this,'visibility','red')">Invisible</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'visibility','green')">Dominant</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'visibility','cyan')">Competitive</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'visibility','orange')">Weak</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'visibility','red')">Invisible</button>
         </div>
       </div>
 
@@ -1855,17 +1857,17 @@ body {
         <div class="num-box">
           <div class="num-label">GPN TOTAL FACINGS</div>
           <div class="spin-row">
-            <button class="spin-btn" onclick="spin('facing-gpn',-1)">−</button>
+            <button type="button" class="spin-btn" onclick="spin('facing-gpn',-1)">−</button>
             <input class="num-input" type="number" id="facing-gpn" value="0" min="0" style="flex:1">
-            <button class="spin-btn" onclick="spin('facing-gpn',1)">+</button>
+            <button type="button" class="spin-btn" onclick="spin('facing-gpn',1)">+</button>
           </div>
         </div>
         <div class="num-box">
           <div class="num-label">COMPETITOR FACINGS</div>
           <div class="spin-row">
-            <button class="spin-btn" onclick="spin('facing-comp',-1)">−</button>
+            <button type="button" class="spin-btn" onclick="spin('facing-comp',-1)">−</button>
             <input class="num-input" type="number" id="facing-comp" value="0" min="0" style="flex:1">
-            <button class="spin-btn" onclick="spin('facing-comp',1)">+</button>
+            <button type="button" class="spin-btn" onclick="spin('facing-comp',1)">+</button>
           </div>
         </div>
       </div>
@@ -1875,47 +1877,47 @@ body {
       <div class="field">
         <div class="fl">GPN Creatine presence in category section</div>
         <div class="sel-group" id="creatine-on">
-          <button class="sel-btn" onclick="selBtn(this,'creatine-on','green')">Present ✓</button>
-          <button class="sel-btn" onclick="selBtn(this,'creatine-on','red')">Missing</button>
-          <button class="sel-btn" onclick="selBtn(this,'creatine-on','yellow')">1–2 facings only</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'creatine-on','green')">Present ✓</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'creatine-on','red')">Missing</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'creatine-on','yellow')">1–2 facings only</button>
         </div>
       </div>
 
       <div class="field">
         <div class="fl">Planogram compliance</div>
         <div class="sel-group" id="plano">
-          <button class="sel-btn" onclick="selBtn(this,'plano','green')">Compliant</button>
-          <button class="sel-btn" onclick="selBtn(this,'plano','orange')">Partial deviation</button>
-          <button class="sel-btn" onclick="selBtn(this,'plano','red')">Not followed</button>
-          <button class="sel-btn" onclick="selBtn(this,'plano','yellow')">No planogram</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'plano','green')">Compliant</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'plano','orange')">Partial deviation</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'plano','red')">Not followed</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'plano','yellow')">No planogram</button>
         </div>
       </div>
 
       <div class="field">
         <div class="fl">Competitor with strongest shelf pressure</div>
         <div class="comp-tags" id="comp-pressure">
-          <button class="comp-tag" onclick="toggleComp(this)">Birdman</button>
-          <button class="comp-tag" onclick="toggleComp(this)">Habits</button>
-          <button class="comp-tag" onclick="toggleComp(this)">Yaoca</button>
-          <button class="comp-tag" onclick="toggleComp(this)">ProWinner</button>
-          <button class="comp-tag" onclick="toggleComp(this)">Elemental</button>
-          <button class="comp-tag" onclick="toggleComp(this)">Air Drive</button>
-          <button class="comp-tag" onclick="toggleComp(this)">HEB Private Label</button>
-          <button class="comp-tag" onclick="toggleComp(this)">Refreshers</button>
-          <button class="comp-tag" onclick="toggleComp(this)">Dymatize</button>
-          <button class="comp-tag" onclick="toggleComp(this)">BSN</button>
-          <button class="comp-tag" onclick="toggleComp(this)">Otro Vegan</button>
-          <button class="comp-tag" onclick="toggleComp(this)">Ninguno</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Birdman</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Habits</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Yaoca</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">ProWinner</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Elemental</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Air Drive</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">HEB Private Label</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Refreshers</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Dymatize</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">BSN</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Otro Vegan</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Ninguno</button>
         </div>
       </div>
       <div class="field">
         <div class="fl">Category pressure signals</div>
         <div class="comp-tags" id="comp-cat">
-          <button class="comp-tag" onclick="toggleComp(this)">Vegan dominates</button>
-          <button class="comp-tag" onclick="toggleComp(this)">Creatine gap</button>
-          <button class="comp-tag" onclick="toggleComp(this)">Sachet pressure</button>
-          <button class="comp-tag" onclick="toggleComp(this)">RTD rival visible</button>
-          <button class="comp-tag" onclick="toggleComp(this)">Aggressive pricing</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Vegan dominates</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Creatine gap</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Sachet pressure</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">RTD rival visible</button>
+          <button type="button" class="comp-tag" onclick="toggleComp(this)">Aggressive pricing</button>
         </div>
       </div>
 
@@ -1939,28 +1941,28 @@ body {
       <div class="field">
         <div class="fl">GPN Secondary Display</div>
         <div class="sel-group" id="disp-status">
-          <button class="sel-btn" onclick="selBtn(this,'disp-status','green')">Active ✓</button>
-          <button class="sel-btn" onclick="selBtn(this,'disp-status','red')">Missing</button>
-          <button class="sel-btn" onclick="selBtn(this,'disp-status','yellow')">Partial</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-status','green')">Active ✓</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-status','red')">Missing</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-status','yellow')">Partial</button>
         </div>
       </div>
 
       <div class="field">
         <div class="fl">Display Size</div>
         <div class="sel-group" id="disp-size">
-          <button class="sel-btn" onclick="selBtn(this,'disp-size','cyan')">Grande</button>
-          <button class="sel-btn" onclick="selBtn(this,'disp-size','cyan')">Mediana</button>
-          <button class="sel-btn" onclick="selBtn(this,'disp-size','cyan')">Pequeña</button>
-          <button class="sel-btn" onclick="selBtn(this,'disp-size','red')">Sin exhibición</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-size','cyan')">Grande</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-size','cyan')">Mediana</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-size','cyan')">Pequeña</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-size','red')">Sin exhibición</button>
         </div>
       </div>
 
       <div class="field">
         <div class="fl">Location / Traffic</div>
         <div class="sel-group" id="disp-loc">
-          <button class="sel-btn" onclick="selBtn(this,'disp-loc','green')">Entrance / high traffic</button>
-          <button class="sel-btn" onclick="selBtn(this,'disp-loc','yellow')">Internal aisle</button>
-          <button class="sel-btn" onclick="selBtn(this,'disp-loc','red')">Dead zone</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-loc','green')">Entrance / high traffic</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-loc','yellow')">Internal aisle</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'disp-loc','red')">Dead zone</button>
         </div>
       </div>
 
@@ -1970,10 +1972,10 @@ body {
         <div class="field">
           <div class="fl">RTD refrigeration location</div>
           <div class="sel-group" id="rtd-loc">
-            <button class="sel-btn" onclick="selBtn(this,'rtd-loc','green')">Cooler + checkout ✓</button>
-            <button class="sel-btn" onclick="selBtn(this,'rtd-loc','yellow')">Generic cooler</button>
-            <button class="sel-btn" onclick="selBtn(this,'rtd-loc','red')">Ambient shelf</button>
-            <button class="sel-btn" onclick="selBtn(this,'rtd-loc','red')">Sin RTD</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'rtd-loc','green')">Cooler + checkout ✓</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'rtd-loc','yellow')">Generic cooler</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'rtd-loc','red')">Ambient shelf</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'rtd-loc','red')">Sin RTD</button>
           </div>
         </div>
       </div>
@@ -1981,10 +1983,10 @@ body {
       <div class="field">
         <div class="fl">Competitor display vs GPN</div>
         <div class="sel-group" id="comp-disp">
-          <button class="sel-btn" onclick="selBtn(this,'comp-disp','green')">GPN dominates</button>
-          <button class="sel-btn" onclick="selBtn(this,'comp-disp','yellow')">Similar</button>
-          <button class="sel-btn" onclick="selBtn(this,'comp-disp','red')">Competitor dominates</button>
-          <button class="sel-btn" onclick="selBtn(this,'comp-disp','cyan')">No competitor visible</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'comp-disp','green')">GPN dominates</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'comp-disp','yellow')">Similar</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'comp-disp','red')">Competitor dominates</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'comp-disp','cyan')">No competitor visible</button>
         </div>
       </div>
 
@@ -2000,19 +2002,19 @@ body {
       <div class="field">
         <div class="fl">Price integrity</div>
         <div class="sel-group" id="price-int">
-          <button class="sel-btn" onclick="selBtn(this,'price-int','green')">Correct ✓</button>
-          <button class="sel-btn" onclick="selBtn(this,'price-int','red')">Incorrect</button>
-          <button class="sel-btn" onclick="selBtn(this,'price-int','orange')">Inconsistent</button>
-          <button class="sel-btn" onclick="selBtn(this,'price-int','yellow')">No price tag</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'price-int','green')">Correct ✓</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'price-int','red')">Incorrect</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'price-int','orange')">Inconsistent</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'price-int','yellow')">No price tag</button>
         </div>
       </div>
 
       <div class="field">
         <div class="fl">POP Materials (stoppers / danglers)</div>
         <div class="sel-group" id="pop-ok">
-          <button class="sel-btn" onclick="selBtn(this,'pop-ok','green')">Present ✓</button>
-          <button class="sel-btn" onclick="selBtn(this,'pop-ok','yellow')">Damaged / wrong</button>
-          <button class="sel-btn" onclick="selBtn(this,'pop-ok','red')">Missing</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'pop-ok','green')">Present ✓</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'pop-ok','yellow')">Damaged / wrong</button>
+          <button type="button" class="sel-btn" onclick="selBtn(this,'pop-ok','red')">Missing</button>
         </div>
       </div>
 
@@ -2021,9 +2023,9 @@ body {
         <div class="field">
           <div class="fl">RTD promo — clear to shopper?</div>
           <div class="sel-group" id="rtd-promo">
-            <button class="sel-btn" onclick="selBtn(this,'rtd-promo','green')">Clear and visible ✓</button>
-            <button class="sel-btn" onclick="selBtn(this,'rtd-promo','red')">Not visible</button>
-            <button class="sel-btn" onclick="selBtn(this,'rtd-promo','red')">No active promo</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'rtd-promo','green')">Clear and visible ✓</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'rtd-promo','red')">Not visible</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'rtd-promo','red')">No active promo</button>
           </div>
         </div>
       </div>
@@ -2033,18 +2035,18 @@ body {
         <div class="field">
           <div class="fl">Staff actively recommends GPN</div>
           <div class="sel-group" id="staff-rec">
-            <button class="sel-btn" onclick="selBtn(this,'staff-rec','green')">Spontaneous ✓</button>
-            <button class="sel-btn" onclick="selBtn(this,'staff-rec','yellow')">Only if asked</button>
-            <button class="sel-btn" onclick="selBtn(this,'staff-rec','red')">Does not recommend</button>
-            <button class="sel-btn" onclick="selBtn(this,'staff-rec','red')">Recommends competitor</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'staff-rec','green')">Spontaneous ✓</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'staff-rec','yellow')">Only if asked</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'staff-rec','red')">Does not recommend</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'staff-rec','red')">Recommends competitor</button>
           </div>
         </div>
         <div class="field">
           <div class="fl">Staff knowledge level</div>
           <div class="sel-group" id="staff-level">
-            <button class="sel-btn" onclick="selBtn(this,'staff-level','green')">High</button>
-            <button class="sel-btn" onclick="selBtn(this,'staff-level','yellow')">Medium</button>
-            <button class="sel-btn" onclick="selBtn(this,'staff-level','red')">Low</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'staff-level','green')">High</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'staff-level','yellow')">Medium</button>
+            <button type="button" class="sel-btn" onclick="selBtn(this,'staff-level','red')">Low</button>
           </div>
         </div>
       </div>
@@ -2062,7 +2064,7 @@ body {
 
 
       <hr class="div">
-      <button class="btn-main" onclick="generate()" style="width:100%;">Generate DAEXA Report →</button>
+      <button type="button" class="btn-main" onclick="generate()" style="width:100%;">Generate DAEXA Report →</button>
     </div>
 
     <!-- ══════════════════════════════════════════
@@ -2091,7 +2093,7 @@ body {
         </div>
         <div class="out-card-body" id="out-wa"></div>
         <div class="out-actions">
-          <button class="act-btn primary" id="cp-wa" onclick="cpBtn('out-wa','cp-wa')">📋 Copiar WhatsApp</button>
+          <button type="button" class="act-btn primary" id="cp-wa" onclick="cpBtn('out-wa','cp-wa')">📋 Copiar WhatsApp</button>
         </div>
       </div>
 
@@ -2103,7 +2105,7 @@ body {
         </div>
         <div class="out-card-body" id="out-email"></div>
         <div class="out-actions">
-          <button class="act-btn" id="cp-email" onclick="cpBtn('out-email','cp-email')">Copiar Email</button>
+          <button type="button" class="act-btn" id="cp-email" onclick="cpBtn('out-email','cp-email')">Copiar Email</button>
           
         </div>
       </div>
@@ -2116,7 +2118,7 @@ body {
         </div>
         <div class="out-card-body" id="out-teams"></div>
         <div class="out-actions">
-          <button class="act-btn" id="cp-teams" onclick="cpBtn('out-teams','cp-teams')">Copiar Teams</button>
+          <button type="button" class="act-btn" id="cp-teams" onclick="cpBtn('out-teams','cp-teams')">Copiar Teams</button>
         </div>
       </div>
 
@@ -2128,8 +2130,8 @@ body {
         </div>
         <div class="out-card-body" id="out-txt"></div>
         <div class="out-actions">
-          <button class="act-btn primary" onclick="dlTxt()">⬇ Descargar TXT</button>
-          <button class="act-btn" id="cp-txt" onclick="cpBtn('out-txt','cp-txt')">Copiar texto</button>
+          <button type="button" class="act-btn primary" onclick="dlTxt()">⬇ Descargar TXT</button>
+          <button type="button" class="act-btn" id="cp-txt" onclick="cpBtn('out-txt','cp-txt')">Copiar texto</button>
         </div>
       </div>
 
@@ -2144,9 +2146,9 @@ body {
           <span style="font-size:10px;font-family:var(--f-mono);" id="sheets-indicator">● Connected to GPN Mexico Field Intelligence</span>
         </div>
         <div class="out-actions">
-          <button class="act-btn primary" onclick="dlSessionCsv()" id="btn-session-csv">⬇ Export Full Session</button>
-          <button class="act-btn primary" onclick="pushSkuNow()" style="border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,0.08);">↑ Push SKU Data to Sheets</button>
-          <button class="act-btn" onclick="dlSkuCsv()">⬇ SKU CSV</button>
+          <button type="button" class="act-btn primary" onclick="dlSessionCsv()" id="btn-session-csv">⬇ Export Full Session</button>
+          <button type="button" class="act-btn primary" onclick="pushSkuNow()" style="border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,0.08);">↑ Push SKU Data to Sheets</button>
+          <button type="button" class="act-btn" onclick="dlSkuCsv()">⬇ SKU CSV</button>
         </div>
       </div>
 
@@ -2173,21 +2175,21 @@ body {
           </table>
         </div>
         <div class="out-actions">
-          <button class="act-btn primary" onclick="dlWeeklyTxt()">⬇ Download Digest</button>
-          <button class="act-btn" onclick="cpText('digest-out-hidden')">Copy Digest</button>
+          <button type="button" class="act-btn primary" onclick="dlWeeklyTxt()">⬇ Download Digest</button>
+          <button type="button" class="act-btn" onclick="cpText('digest-out-hidden')">Copy Digest</button>
         </div>
       </div>
 
       <textarea id="digest-out-hidden" style="position:absolute;left:-9999px;top:-9999px;"></textarea>
-      <button class="btn-back" onclick="newVisit()" style="width:100%; margin-top:8px;">+ New Visit</button>
+      <button type="button" class="btn-back" onclick="newVisit()" style="width:100%; margin-top:8px;">+ New Visit</button>
     </div>
 
   </div><!-- scroll-area -->
 
   <!-- BOTTOM NAV -->
   <div class="nav-bottom">
-    <button class="btn-back" id="btn-back" style="display:none;" onclick="prevStep()">← Atrás</button>
-    <button class="btn-main" id="btn-next" onclick="nextStep()">Seleccionar tienda →</button>
+    <button type="button" class="btn-back" id="btn-back" style="display:none;" onclick="prevStep()">← Atrás</button>
+    <button type="button" class="btn-main" id="btn-next" onclick="nextStep()">Seleccionar tienda →</button>
   </div>
 
 </div><!-- shell -->
@@ -2302,7 +2304,7 @@ function updateStorePill() {
     (() => { const b = document.querySelector('#chain-sel .s-cyan'); return b ? b.textContent.trim() : ''; })();
   const loc   = document.getElementById('store-name-input').value;
   const parts = [chain, loc, city].filter(Boolean);
-  selStoreName = parts.join(' · ') || 'Sin tienda';
+  selStoreName = parts.join(' · ') || '';
   selChannel = chain.toLowerCase().replace(/\s+/g,'-');
   const pill = document.getElementById('top-store');
   pill.textContent = selStoreName;
@@ -2666,15 +2668,9 @@ ${selChannel==='heb'?'- RTD: '+data.rtd:''}
 - Precio: ${data.price} | POP: ${data.pop}
 ${selChannel==='gnc'?'- Staff recomienda: '+getRV('staff-rec'):'- Promo RTD: '+getRV('rtd-promo')}
 
-${issues.length?'⚠️ **Issues críticos:**
-'+issues.map(i=>'- '+i).join('
-'):'✅ Sin issues críticos'}
-${opps.length?'
-💡 **Oportunidades:**
-'+opps.slice(0,3).map(o=>'- '+o.text.replace(/<[^>]+>/g,'')).join('
-'):''}
-${visitNote?'
-📝 **Nota de campo:** '+visitNote:''}`;
+${issues.length?'⚠️ **Issues críticos:**\n'+issues.map(i=>'- '+i).join('\n'):'✅ Sin issues críticos'}
+${opps.length?'\n💡 **Oportunidades:**\n'+opps.slice(0,3).map(o=>'- '+o.text.replace(/<[^>]+>/g,'')).join('\n'):''}
+${visitNote?'\n📝 **Nota de campo:** '+visitNote:''}`;
 
   document.getElementById('out-wa').textContent = wa;
   document.getElementById('out-email').textContent = email;
